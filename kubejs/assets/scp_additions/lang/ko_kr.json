@@ -1,0 +1,15 @@
+{
+  "item.scp_additions.level_1_keycard": "1등급 연구소 출입 카드",
+  "item.scp_additions.level_2_keycard": "2등급 보안 카드",
+  "item.scp_additions.level_3_keycard": "3등급 보안 카드",
+  "item.scp_additions.level_4_keycard": "4등급 보안 카드",
+  "item.scp_additions.level_5_keycard": "5등급 보안 카드",
+  "item.scp_additions.level_6_keycard": "6등급 최고 보안 카드",
+  "item.scp_additions.keycard_reader": "키카드 판독기",
+  "screen.scp_additions.keycard_reader_config": "키카드 보안 등급",
+  "message.scp_additions.keycard_reader_level_copied": "키카드 판독기 %s등급 저장됨",
+  "message.scp_additions.keycard_reader_level_applied": "키카드 판독기 %s등급 적용됨",
+  "message.scp_additions.keycard_reader_no_saved_level": "저장된 키카드 판독기 등급이 없습니다",
+  "tooltip.scp_additions.keycard_reader_placement": "판독기를 설치할 면을 클릭하십시오",
+  "tooltip.scp_additions.keycard_reader_configure": "사용해 설정 · 웅크려 복사 · Ctrl을 누른 채 적용"
+}
