@@ -138,6 +138,19 @@ ServerEvents.chestLootTables(event => {
     })
   })
 
+  // Bottom floor (B2) of the general lab. No cards: Level 4+ stays deep-site only.
+  event.addChest('deceasedcraft:scp_lab/lab_vault', table => {
+    table.addPool(pool => {
+      pool.setUniformRolls(3, 5)
+      pool.addItem('deceasedcraft:research_paper_3', 8)
+      pool.addItem('deceasedcraft:research_paper_4', 5)
+      pool.addItem('scp_additions:security_credentials', 8)
+      pool.addItem('minecraft:emerald', 8)
+      pool.addItem('minecraft:gold_ingot', 10)
+      pool.addItem('minecraft:diamond', 2)
+    })
+  })
+
   // Deep-site progression. Each wing has two credential caches, so a failed
   // roll means extracting and raiding another site instead of crafting past it.
   event.addChest('deceasedcraft:scp_lab/clearance_4', table => {

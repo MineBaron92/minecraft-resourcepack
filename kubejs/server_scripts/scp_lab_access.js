@@ -82,6 +82,40 @@ const findNearbyReader = (level, origin, radius) => {
   return nearestReader
 }
 
+// Only the shutter attached to this reader opens: seed with bars right next to
+// the reader, then follow connected bars. Multi-floor labs stack gates closer
+// than the old 6-block scan radius, so a box scan would open other gates.
+const findShutterBars = (level, reader) => {
+  const found = []
+  const seen = {}
+  const visit = (x, y, z) => {
+    const key = x + ',' + y + ',' + z
+    if (seen[key]) return
+    seen[key] = true
+    if (level.getBlock(x, y, z).id == 'minecraft:iron_bars') found.push({ x: x, y: y, z: z })
+  }
+
+  for (let x = reader.x - 2; x <= reader.x + 2; x++) {
+    for (let y = reader.y - 2; y <= reader.y + 2; y++) {
+      for (let z = reader.z - 2; z <= reader.z + 2; z++) {
+        visit(x, y, z)
+      }
+    }
+  }
+
+  for (let i = 0; i < found.length && found.length < 128; i++) {
+    const p = found[i]
+    visit(p.x + 1, p.y, p.z)
+    visit(p.x - 1, p.y, p.z)
+    visit(p.x, p.y + 1, p.z)
+    visit(p.x, p.y - 1, p.z)
+    visit(p.x, p.y, p.z + 1)
+    visit(p.x, p.y, p.z - 1)
+  }
+
+  return found
+}
+
 BlockEvents.rightClicked(event => {
   // The event fires once per hand; only handle the main hand.
   if (String(event.hand) != 'MAIN_HAND') return
@@ -113,21 +147,13 @@ BlockEvents.rightClicked(event => {
     return
   }
 
-  let opened = 0
+  const bars = findShutterBars(event.level, reader)
+  bars.forEach(p => {
+    // Vanilla setblock sends an explicit block update (avoids client ghost bars).
+    event.server.runCommandSilent(`execute in ${event.level.dimension} run setblock ${p.x} ${p.y} ${p.z} minecraft:air replace`)
+  })
 
-  for (let x = reader.x - 6; x <= reader.x + 6; x++) {
-    for (let y = reader.y - 2; y <= reader.y + 2; y++) {
-      for (let z = reader.z - 6; z <= reader.z + 6; z++) {
-        if (event.level.getBlock(x, y, z).id == 'minecraft:iron_bars') {
-          // Vanilla setblock sends an explicit block update (avoids client ghost bars).
-          event.server.runCommandSilent(`execute in ${event.level.dimension} run setblock ${x} ${y} ${z} minecraft:air replace`)
-          opened++
-        }
-      }
-    }
-  }
-
-  if (opened > 0) {
+  if (bars.length > 0) {
     event.player.tell(`§a${reader.level}등급 인증 완료. 보안 셔터가 해제되었습니다.`)
     event.server.runCommandSilent(`execute in ${event.level.dimension} run playsound minecraft:block.iron_door.open master ${event.player.username} ${reader.x} ${reader.y} ${reader.z} 1 0.8`)
   } else {
