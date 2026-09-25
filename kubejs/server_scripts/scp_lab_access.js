@@ -1,5 +1,10 @@
 // Keycard-controlled shutters used by the DeceasedCraft SCP laboratory prefab.
 // Readers permanently open nearby iron-bar shutters in that individual facility.
+//
+// FIX (2026-09-25): KubeJS 6 (2001.x) event.cancel() throws an EventExit and stops
+// the handler immediately. The previous version called cancel() BEFORE doing any
+// work, so no message was shown and no bars were removed. cancel() is now the
+// LAST statement on every path.
 
 const SCP_LAB_READER_LEVELS = {
   'scp_additions:left_reader': 1,
@@ -55,9 +60,6 @@ const SCP_LAB_DECORATIVE_SCANNERS = {
   'scp_the_facility:keycard_scanner_incorrect': true
 }
 
-// The prefab uses SCP Facility scanners on the return side of each shutter.
-// Resolve those decorative scanners to the nearest SCP Additions reader so
-// both sides of the door obey the same clearance rules without generator power.
 const findNearbyReader = (level, origin, radius) => {
   let nearestReader = null
   let nearestDistance = 999
@@ -81,6 +83,9 @@ const findNearbyReader = (level, origin, radius) => {
 }
 
 BlockEvents.rightClicked(event => {
+  // The event fires once per hand; only handle the main hand.
+  if (String(event.hand) != 'MAIN_HAND') return
+
   const clicked = event.block.pos
   const cardLevel = SCP_LAB_CARD_LEVELS[event.item.id] || 0
   let reader = null
@@ -94,38 +99,28 @@ BlockEvents.rightClicked(event => {
     reader = findNearbyReader(event.level, clicked, 8)
   }
 
-  // SCP Additions readers use selection boxes that extend outside their own
-  // block cell. The ray trace can therefore report the supporting wall even
-  // though the player visibly clicked the reader. When a keycard is held,
-  // resolve that click to the nearest reader in the small wall area.
+  // Reader selection boxes extend outside their block cell, so the ray trace
+  // may report the supporting wall. With a keycard held, resolve to the nearest reader.
   if (!reader && cardLevel > 0) {
     reader = findNearbyReader(event.level, clicked, 3)
   }
 
   if (!reader) return
 
-  // Cancel before handling the card so SCP Facility does not display its
-  // built-in "An Active Generator is needed" action-bar message.
-  event.cancel()
-
   if (cardLevel < reader.level) {
     event.player.tell(`§c접근 거부: ${reader.level}등급 이상의 보안 카드가 필요합니다.`)
+    event.cancel() // must be last: stops execution immediately in KubeJS 6
     return
   }
 
   let opened = 0
 
-  // Readers sit beside a 5x3 iron-bar shutter. A six-block scan keeps the
-  // prefab rotation-safe while staying local enough not to affect other rooms.
   for (let x = reader.x - 6; x <= reader.x + 6; x++) {
     for (let y = reader.y - 2; y <= reader.y + 2; y++) {
       for (let z = reader.z - 6; z <= reader.z + 6; z++) {
-        const target = event.level.getBlock(x, y, z)
-        if (target.id == 'minecraft:iron_bars') {
-          // Use the vanilla command path so the server sends an explicit block
-          // update packet. Direct BlockContainerJS#set can leave client-side
-          // ghost bars that look solid but have no collision.
-          event.server.runCommandSilent(`setblock ${x} ${y} ${z} minecraft:air replace`)
+        if (event.level.getBlock(x, y, z).id == 'minecraft:iron_bars') {
+          // Vanilla setblock sends an explicit block update (avoids client ghost bars).
+          event.server.runCommandSilent(`execute in ${event.level.dimension} run setblock ${x} ${y} ${z} minecraft:air replace`)
           opened++
         }
       }
@@ -134,9 +129,11 @@ BlockEvents.rightClicked(event => {
 
   if (opened > 0) {
     event.player.tell(`§a${reader.level}등급 인증 완료. 보안 셔터가 해제되었습니다.`)
-    event.server.runCommandSilent(`playsound minecraft:block.iron_door.open master ${event.player.username} ${reader.x} ${reader.y} ${reader.z} 1 0.8`)
+    event.server.runCommandSilent(`execute in ${event.level.dimension} run playsound minecraft:block.iron_door.open master ${event.player.username} ${reader.x} ${reader.y} ${reader.z} 1 0.8`)
   } else {
     event.player.tell('§7이미 해제된 보안 구역입니다.')
   }
 
+  // Cancel LAST so SCP Facility does not show "An Active Generator is needed".
+  event.cancel()
 })
