@@ -97,8 +97,18 @@ def landmarks(L):
     for s in ("r", "l"):
         p0, p1 = pca_axis(L["handwear-" + s][:, :, 3])
         sh, hand = (p0, p1) if abs(p0[0] - tcx) < abs(p1[0] - tcx) else (p1, p0)
+        # The PCA end is the TOP EDGE of the sleeve. Rotating about that edge swings the arm
+        # root out over the shoulder ("dislocated"). Put the joint inside the torso
+        # silhouette instead: down the arm axis and in toward the body, so the seam stays
+        # hidden under the cardigan shoulder when the arm rises.
+        a_len = float(np.hypot(*(hand - sh)))
+        a_wid = float((L["handwear-" + s][:, :, 3] > 128).sum()) / a_len
+        axis = (hand - sh) / a_len
+        inward = np.array([np.sign(tcx - sh[0]), 0.0])
+        sh = sh + axis * 0.18 * a_wid + inward * 0.45 * a_wid
         elbow = sh + 0.48 * (hand - sh)
         wrist = sh + 0.80 * (hand - sh)
+        lm["arm_width_" + s] = a_wid
         lm["arm_" + s] = (tuple(sh), tuple(elbow), tuple(wrist), tuple(hand))
     # legs: split the leg layer at the body centre line
     lg = L["legwear"][:, :, 3] > 128
@@ -175,6 +185,13 @@ def build_skeleton(lm):
         sx = a0[0] * 0.55 + ncx * 0.45
         add("shoulder_" + s, "chest", (sx, a0[1] + 4), a0)
         add(f"arm_{s}_up", "shoulder_" + s, a0, a1)
+        # deltoid: a short helper on the upper arm right at the joint; only the cardigan's
+        # shoulder cap is weighted to it, so the fabric stretches over the rising sleeve root
+        # instead of the root popping out above the shoulder line
+        ax = np.subtract(a1, a0) / np.hypot(*np.subtract(a1, a0))
+        aw = lm["arm_width_" + s]
+        # segment sits on the shoulder CAP (outward from the inner pivot), away from the top
+        add("deltoid_" + s, f"arm_{s}_up", tuple(np.add(a0, ax * 0.45 * aw)), tuple(np.add(a0, ax * 1.05 * aw)))
         add(f"arm_{s}_low", f"arm_{s}_up", a1, a2)
         add("hand_" + s, f"arm_{s}_low", a2, a3)
     for s in ("r", "l"):
@@ -201,7 +218,8 @@ WEIGHTS = {
                 # raised arms (jump_cheer) dragged those vertices into a sawtooth edge
                 "cardigan_r": (1.4, 14), "cardigan_l": (1.4, 14), "neck": (0.8, 10),
                 # shoulders only near the joint (small rotations: shrug), not along the arm line
-                "shoulder_r": (0.9, 10), "shoulder_l": (0.9, 10)},
+                "shoulder_r": (0.9, 10), "shoulder_l": (0.9, 10),
+                "deltoid_r": (1.3, 22), "deltoid_l": (1.3, 22)},     # sigma rescaled to arm width
     "bottomwear": {"hip": (1.0, 40), "spine": (0.6, 20), "skirt_r": (1.2, 26), "skirt_c": (1.2, 26),
                    "skirt_l": (1.2, 26)},
     "legwear": {"hip": (0.8, 35), "thigh_r": (1.0, 40), "thigh_l": (1.0, 40), "shin_r": (1.0, 40),
@@ -301,8 +319,10 @@ T_OFF, T_APEX, T_LAND, JUMP_H = 0.74, 1.05, 1.36, 72.0
 V0 = 2 * JUMP_H / (T_LAND - T_OFF)                        # take-off speed of a symmetric parabola
 HIP_Y = [(0.0, 0, 0), (0.30, 0, 0), (0.62, -26, 0), (T_OFF, 0, V0)]
 LAND_Y = [(T_LAND, 0, -V0), (1.52, -22, 0), (1.80, 3, 0), (2.05, 0, 0), (2.8, 0, 0)]
-ARM_UP = [(0.0, 0, 0), (0.30, 0, 0), (0.62, 14, 0), (0.82, -70, -420), (1.00, -105, 0), (1.30, -100, 0),
-          (1.52, -72, 120), (1.85, -20, 120), (2.2, 3, 0), (2.45, 0, 0), (2.8, 0, 0)]
+# peak ~76 deg: above ~80 deg the root of a 2-D cutout arm shows above the shoulder line
+# (a hand-animated rig would swap in a "raised shoulder" drawing there)
+ARM_UP = [(0.0, 0, 0), (0.30, 0, 0), (0.62, 14, 0), (0.82, -52, -300), (1.00, -76, 0), (1.30, -73, 0),
+          (1.52, -53, 90), (1.85, -14, 90), (2.2, 3, 0), (2.45, 0, 0), (2.8, 0, 0)]
 ARM_LOW = [(0.0, 0, 0), (0.30, 0, 0), (0.62, 10, 0), (0.85, -15, 0), (1.05, -28, 0), (1.35, -22, 0),
            (1.60, -6, 0), (2.0, 4, 0), (2.4, 0, 0), (2.8, 0, 0)]
 
@@ -322,7 +342,7 @@ def jump_primary(t, dur=2.8):
     drift = 6.0 * air                                        # slight sideways travel -> asymmetric swing
     # left arm a touch later and smaller than the right: no mirror-perfect puppet motion
     au_r, al_r = herm(t, ARM_UP), herm(t, ARM_LOW)
-    au_l, al_l = 0.94 * herm(t - 0.05, ARM_UP), 0.94 * herm(t - 0.05, ARM_LOW)
+    au_l, al_l = 0.97 * herm(t - 0.05, ARM_UP), 0.94 * herm(t - 0.05, ARM_LOW)
     m = {"hip": (drift, y, 2.0 * air - 1.5 * crouch, 1, 1),
          "spine": (0, 0, -1.5 * air + 1.0 * crouch, 1, 1),
          "chest": (0, 0, 2.0 * air, 1, 1),
@@ -330,12 +350,11 @@ def jump_primary(t, dur=2.8):
          "neck": (0, 0, -2.0 * air + 1.5 * crouch, 1, 1),
          "head": (0, 0, 6.0 * air - 3.0 * crouch, 1, 1)}
     for s, sg, au, al in (("r", 1, au_r, al_r), ("l", -1, au_l, al_l)):
-        raise_ = max(0.0, -au) / 105.0                       # 0 at rest .. 1 arms up
+        raise_ = max(0.0, -au) / 76.0                       # 0 at rest .. 1 arms up
         # elbow arcs: bends most mid-swing, nearly straight at the top
         arc = -32.0 * math.sin(math.pi * min(1.0, raise_)) if au < 0 else 0.0
-        m["shoulder_" + s] = (0, 0, sg * -9.0 * raise_, 1, 1)          # shoulder lifts with the arm
-        # raised arms reach slightly toward the camera -> foreshorten the upper arm
-        m[f"arm_{s}_up"] = (0, 0, sg * au, 1 - 0.08 * raise_, 1 + 0.03 * raise_)
+        m["shoulder_" + s] = (0, 0, sg * -3.0 * raise_, 1, 1)          # slight shoulder lift only
+        m[f"arm_{s}_up"] = (0, 0, sg * au, 1, 1)
         m[f"arm_{s}_low"] = (0, 0, sg * (al + arc), 1, 1)
         m["hand_" + s] = (0, 0, sg * 8.0 * raise_, 1, 1)               # open, relaxed wrist at the top
     # legs: compress to keep the feet planted while the hip is below rest; in the air the
@@ -396,6 +415,7 @@ def main():
     lm = landmarks(layers)
     Rb = lm["bust_R"]
     for side in ("r", "l"):
+        WEIGHTS["topwear"]["deltoid_" + side] = (0.9, 0.24 * lm["arm_width_" + side])
         WEIGHTS["topwear"]["breast_" + side] = (1.5, 0.34 * Rb)
         WEIGHTS["topwear"]["breast_" + side + "_tip"] = (2.8, 0.50 * Rb)
     bones = build_skeleton(lm)

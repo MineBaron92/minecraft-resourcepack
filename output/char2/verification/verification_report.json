@@ -1,6 +1,6 @@
 {
   "runtime": {
-    "bones": 37,
+    "bones": 39,
     "slots": 22,
     "physics": 20,
     "animations": [
@@ -33,32 +33,32 @@
     "frame_fps": 30
   },
   "setup_pose_vs_reference": {
-    "mae": 2.654,
+    "mae": 2.655,
     "psnr_db": 24.18,
     "mae_in_silhouette": 11.174,
     "ssim": 0.9705
   },
   "setup_pose_vs_stage1_composite": {
-    "mae": 0.042,
-    "psnr_db": 57.85
+    "mae": 0.044,
+    "psnr_db": 57.51
   },
   "animations": {
     "idle": {
       "frames": 240,
       "mean_abs_change_vs_setup": [
         19.21,
-        19.43
+        19.44
       ],
       "psnr_vs_reference_range": [
         13.63,
-        13.69
+        13.68
       ],
-      "loop_seam_mae_last_vs_first": 0.124
+      "loop_seam_mae_last_vs_first": 0.127
     },
     "idle_physics": {
       "frames": 240,
       "mean_abs_change_vs_setup": [
-        19.23,
+        19.24,
         19.41
       ],
       "psnr_vs_reference_range": [
@@ -71,47 +71,47 @@
       "frames": 192,
       "mean_abs_change_vs_setup": [
         19.11,
-        19.45
+        19.44
       ],
       "psnr_vs_reference_range": [
         13.63,
         13.71
       ],
-      "loop_seam_mae_last_vs_first": 0.223
+      "loop_seam_mae_last_vs_first": 0.224
     },
     "bust_bounce_physics": {
       "frames": 192,
       "mean_abs_change_vs_setup": [
-        19.11,
+        19.12,
         19.43
       ],
       "psnr_vs_reference_range": [
         13.64,
         13.71
       ],
-      "loop_seam_mae_last_vs_first": 0.213
+      "loop_seam_mae_last_vs_first": 0.215
     },
     "jump_cheer": {
       "frames": 84,
       "mean_abs_change_vs_setup": [
-        18.29,
-        21.16
+        18.27,
+        20.65
       ],
       "psnr_vs_reference_range": [
-        13.1,
-        13.86
+        13.22,
+        13.89
       ],
       "loop_seam_mae_last_vs_first": 0.018
     },
     "jump_cheer_physics": {
       "frames": 84,
       "mean_abs_change_vs_setup": [
-        18.5,
-        21.09
+        18.46,
+        20.57
       ],
       "psnr_vs_reference_range": [
-        13.13,
-        13.83
+        13.24,
+        13.84
       ],
       "loop_seam_mae_last_vs_first": 0.032
     }
