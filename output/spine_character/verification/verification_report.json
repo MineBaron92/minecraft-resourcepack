@@ -1,0 +1,62 @@
+{
+  "runtime": {
+    "bones": 32,
+    "slots": 23,
+    "physics": 17,
+    "animations": [
+      [
+        "idle",
+        8
+      ],
+      [
+        "idle_physics",
+        8
+      ]
+    ],
+    "errors": [],
+    "frame_fps": 10
+  },
+  "setup_pose_vs_reference": {
+    "mae": 0.982,
+    "psnr_db": 32.18,
+    "mae_in_silhouette": 1.259,
+    "ssim": 0.9892
+  },
+  "setup_pose_vs_stage1_composite": {
+    "mae": 0.038,
+    "psnr_db": 54.85
+  },
+  "animations": {
+    "idle": {
+      "frames": 80,
+      "mean_abs_change_vs_setup": [
+        4.61,
+        15.53
+      ],
+      "psnr_vs_reference_range": [
+        14.0,
+        21.04
+      ],
+      "loop_seam_mae_last_vs_first": 0.407
+    },
+    "idle_physics": {
+      "frames": 80,
+      "mean_abs_change_vs_setup": [
+        4.9,
+        11.96
+      ],
+      "psnr_vs_reference_range": [
+        15.34,
+        20.77
+      ],
+      "loop_seam_mae_last_vs_first": 0.353
+    }
+  },
+  "baseline_layout_json_vs_reference": {
+    "mae": 13.757,
+    "psnr_db": 15.99,
+    "mae_in_silhouette": 14.016,
+    "ssim": 0.888
+  },
+  "preview_offline_written": true
+}

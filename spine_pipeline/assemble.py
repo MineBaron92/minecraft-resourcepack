@@ -25,6 +25,7 @@ Usage:  python3 spine_pipeline/assemble.py
 """
 import math
 import os
+import shutil
 import sys
 
 import cv2
@@ -594,6 +595,7 @@ def main():
 
     # ---- 6. outputs ----------------------------------------------------------
     layer_dir = os.path.join(STAGE, "placed_layers")
+    shutil.rmtree(layer_dir, ignore_errors=True)
     os.makedirs(layer_dir, exist_ok=True)
     layout = {"canvas": [W, H], "draw_order": scene.order, "parts": {}}
     for z, n in enumerate(scene.order):

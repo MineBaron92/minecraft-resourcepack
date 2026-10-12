@@ -1,0 +1,58 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>verify</title>
+<style>html,body{margin:0;background:#fff}canvas{display:block}</style>
+<script src="spine-webgl.js"></script></head>
+<body><canvas id="c" width="768" height="768"></canvas>
+<script>
+// Deterministic renderer used only for verification (official spine-webgl 4.2 runtime).
+window.setup = async function (jsonText, atlasText, pngDataUrl) {
+  const canvas = document.getElementById("c");
+  const ctx = new spine.ManagedWebGLRenderingContext(canvas, { alpha: false, preserveDrawingBuffer: true });
+  const img = new Image();
+  await new Promise((ok, err) => { img.onload = ok; img.onerror = err; img.src = pngDataUrl; });
+  const atlas = new spine.TextureAtlas(atlasText);
+  for (const page of atlas.pages) page.setTexture(new spine.GLTexture(ctx, img));
+  const data = new spine.SkeletonJson(new spine.AtlasAttachmentLoader(atlas)).readSkeletonData(JSON.parse(jsonText));
+  const skeleton = new spine.Skeleton(data);
+  const state = new spine.AnimationState(new spine.AnimationStateData(data));
+  const renderer = new spine.SceneRenderer(canvas, ctx, true);
+  renderer.camera.position.x = 0; renderer.camera.position.y = 384;
+  renderer.camera.viewportWidth = 768; renderer.camera.viewportHeight = 768;
+  window._s = { ctx, skeleton, state, renderer, data };
+  return { bones: data.bones.length, slots: data.slots.length, physics: data.physicsConstraints.length,
+           animations: data.animations.map(a => [a.name, a.duration]) };
+};
+function draw() {
+  const { ctx, skeleton, renderer } = window._s;
+  const gl = ctx.gl;
+  gl.clearColor(1, 1, 1, 1); gl.clear(gl.COLOR_BUFFER_BIT);
+  renderer.camera.update();
+  renderer.begin(); renderer.drawSkeleton(skeleton, false); renderer.end();
+  return document.getElementById("c").toDataURL("image/png");
+}
+window.renderSetup = function () {
+  const { skeleton, state } = window._s;
+  state.clearTracks(); skeleton.setToSetupPose();
+  // physics constraints must not move anything in the setup pose
+  skeleton.updateWorldTransform(spine.Physics.pose);
+  return draw();
+};
+// Simulate from t=0 at 60 fps (physics integrates), return frames at requested times.
+window.renderAnim = function (name, times, warmLoops) {
+  const { skeleton, state } = window._s;
+  skeleton.setToSetupPose(); state.clearTracks();
+  state.setAnimation(0, name, true);
+  const dur = skeleton.data.findAnimation(name).duration;
+  const dt = 1 / 60; let t = 0; const out = [];
+  const total = warmLoops * dur;
+  skeleton.updateWorldTransform(spine.Physics.reset);
+  let idx = 0;
+  const targets = times.map(x => x + total);
+  while (idx < targets.length) {
+    state.update(dt); skeleton.update(dt); state.apply(skeleton);
+    skeleton.updateWorldTransform(spine.Physics.update); t += dt;
+    while (idx < targets.length && t >= targets[idx] - 1e-6) { out.push(draw()); idx++; }
+  }
+  return out;
+};
+</script></body></html>

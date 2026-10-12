@@ -1,0 +1,730 @@
+{
+  "landmarks_px": {
+    "topwear": [
+      253,
+      239,
+      508,
+      490
+    ],
+    "bottomwear": [
+      221,
+      466,
+      526,
+      667
+    ],
+    "legwear": [
+      216,
+      571,
+      536,
+      768
+    ],
+    "face": [
+      294,
+      58,
+      450,
+      237
+    ],
+    "neck": [
+      359,
+      170,
+      411,
+      266
+    ],
+    "front_hair": [
+      231,
+      29,
+      489,
+      246
+    ],
+    "breast_r": [
+      319.74807806031936,
+      346.297457125961
+    ],
+    "breast_l": [
+      447.25252525252523,
+      353.9574314574315
+    ],
+    "breast_radius": 52.125,
+    "hair_r": [
+      [
+        288.0,
+        138.0
+      ],
+      [
+        270.0,
+        270.5
+      ],
+      [
+        228.0,
+        403.0
+      ],
+      [
+        204.0,
+        535.5
+      ],
+      [
+        243.0,
+        668.0
+      ]
+    ],
+    "hair_l": [
+      [
+        464.5,
+        138.0
+      ],
+      [
+        491.0,
+        272.25
+      ],
+      [
+        543.5,
+        406.5
+      ],
+      [
+        562.0,
+        540.75
+      ],
+      [
+        523.5,
+        675.0
+      ]
+    ],
+    "hair_back_bottom": 695,
+    "bangs": [
+      [
+        274.0,
+        64.0,
+        226.0
+      ],
+      [
+        360.0,
+        49.0,
+        233.0
+      ],
+      [
+        446.0,
+        56.0,
+        228.0
+      ]
+    ],
+    "eye_r": [
+      327.5,
+      176.0
+    ],
+    "eye_l": [
+      426.5,
+      159.0
+    ],
+    "arm_r": [
+      [
+        302.72774860117414,
+        262.8406258133322
+      ],
+      [
+        297.0516944574794,
+        425.381549919718
+      ],
+      [
+        290.17007209969347,
+        622.4454307546514
+      ]
+    ],
+    "arm_l": [
+      [
+        463.3582916001448,
+        273.8308694825246
+      ],
+      [
+        469.04690956265244,
+        436.7315742866372
+      ],
+      [
+        475.94305011106667,
+        634.2112017056106
+      ]
+    ]
+  },
+  "bones": [
+    {
+      "name": "root",
+      "parent": null,
+      "head_spine": [
+        0.0,
+        0.0
+      ],
+      "angle": 0.0,
+      "length": 0.0
+    },
+    {
+      "name": "hip",
+      "parent": "root",
+      "head_spine": [
+        -3.5,
+        191.5
+      ],
+      "angle": 90.0,
+      "length": 116.5
+    },
+    {
+      "name": "spine",
+      "parent": "hip",
+      "head_spine": [
+        -3.5,
+        308.0
+      ],
+      "angle": 90.0,
+      "length": 108.1
+    },
+    {
+      "name": "chest",
+      "parent": "spine",
+      "head_spine": [
+        -3.5,
+        416.0
+      ],
+      "angle": 87.4,
+      "length": 101.1
+    },
+    {
+      "name": "breath",
+      "parent": "chest",
+      "head_spine": [
+        -3.5,
+        416.0
+      ],
+      "angle": 90.0,
+      "length": 60.0
+    },
+    {
+      "name": "breast_r",
+      "parent": "chest",
+      "head_spine": [
+        -64.3,
+        468.6
+      ],
+      "angle": -90.0,
+      "length": 67.8
+    },
+    {
+      "name": "breast_l",
+      "parent": "chest",
+      "head_spine": [
+        63.3,
+        461.0
+      ],
+      "angle": -90.0,
+      "length": 67.8
+    },
+    {
+      "name": "neck",
+      "parent": "chest",
+      "head_spine": [
+        1.0,
+        517.0
+      ],
+      "angle": 90.0,
+      "length": 36.0
+    },
+    {
+      "name": "head",
+      "parent": "neck",
+      "head_spine": [
+        1.0,
+        553.0
+      ],
+      "angle": 90.0,
+      "length": 157.0
+    },
+    {
+      "name": "eye_r",
+      "parent": "head",
+      "head_spine": [
+        -56.5,
+        592.0
+      ],
+      "angle": 0.0,
+      "length": 10.0
+    },
+    {
+      "name": "eye_l",
+      "parent": "head",
+      "head_spine": [
+        42.5,
+        609.0
+      ],
+      "angle": 0.0,
+      "length": 10.0
+    },
+    {
+      "name": "bang_r",
+      "parent": "head",
+      "head_spine": [
+        -110.0,
+        704.0
+      ],
+      "angle": -90.0,
+      "length": 162.0
+    },
+    {
+      "name": "bang_c",
+      "parent": "head",
+      "head_spine": [
+        -24.0,
+        719.0
+      ],
+      "angle": -90.0,
+      "length": 184.0
+    },
+    {
+      "name": "bang_l",
+      "parent": "head",
+      "head_spine": [
+        62.0,
+        712.0
+      ],
+      "angle": -90.0,
+      "length": 172.0
+    },
+    {
+      "name": "hair_r1",
+      "parent": "head",
+      "head_spine": [
+        -96.0,
+        630.0
+      ],
+      "angle": -97.7,
+      "length": 133.7
+    },
+    {
+      "name": "hair_r2",
+      "parent": "hair_r1",
+      "head_spine": [
+        -114.0,
+        497.5
+      ],
+      "angle": -107.6,
+      "length": 139.0
+    },
+    {
+      "name": "hair_r3",
+      "parent": "hair_r2",
+      "head_spine": [
+        -156.0,
+        365.0
+      ],
+      "angle": -100.3,
+      "length": 134.7
+    },
+    {
+      "name": "hair_r4",
+      "parent": "hair_r3",
+      "head_spine": [
+        -180.0,
+        232.5
+      ],
+      "angle": -73.6,
+      "length": 138.1
+    },
+    {
+      "name": "hair_l1",
+      "parent": "head",
+      "head_spine": [
+        80.5,
+        630.0
+      ],
+      "angle": -78.8,
+      "length": 136.8
+    },
+    {
+      "name": "hair_l2",
+      "parent": "hair_l1",
+      "head_spine": [
+        107.0,
+        495.8
+      ],
+      "angle": -68.6,
+      "length": 144.2
+    },
+    {
+      "name": "hair_l3",
+      "parent": "hair_l2",
+      "head_spine": [
+        159.5,
+        361.5
+      ],
+      "angle": -82.2,
+      "length": 135.5
+    },
+    {
+      "name": "hair_l4",
+      "parent": "hair_l3",
+      "head_spine": [
+        178.0,
+        227.2
+      ],
+      "angle": -106.0,
+      "length": 139.7
+    },
+    {
+      "name": "hair_b1",
+      "parent": "head",
+      "head_spine": [
+        1.0,
+        640.0
+      ],
+      "angle": -90.0,
+      "length": 283.5
+    },
+    {
+      "name": "hair_b2",
+      "parent": "hair_b1",
+      "head_spine": [
+        1.0,
+        356.5
+      ],
+      "angle": -90.0,
+      "length": 273.5
+    },
+    {
+      "name": "shirt_r",
+      "parent": "spine",
+      "head_spine": [
+        -109.0,
+        348.0
+      ],
+      "angle": -97.0,
+      "length": 65.5
+    },
+    {
+      "name": "shirt_l",
+      "parent": "spine",
+      "head_spine": [
+        102.0,
+        348.0
+      ],
+      "angle": -83.0,
+      "length": 65.5
+    },
+    {
+      "name": "arm_r_up",
+      "parent": "chest",
+      "head_spine": [
+        -81.3,
+        505.2
+      ],
+      "angle": -92.0,
+      "length": 162.6
+    },
+    {
+      "name": "arm_r_low",
+      "parent": "arm_r_up",
+      "head_spine": [
+        -86.9,
+        342.6
+      ],
+      "angle": -92.0,
+      "length": 197.2
+    },
+    {
+      "name": "arm_l_up",
+      "parent": "chest",
+      "head_spine": [
+        79.4,
+        494.2
+      ],
+      "angle": -88.0,
+      "length": 163.0
+    },
+    {
+      "name": "arm_l_low",
+      "parent": "arm_l_up",
+      "head_spine": [
+        85.0,
+        331.3
+      ],
+      "angle": -88.0,
+      "length": 197.6
+    },
+    {
+      "name": "thigh_r",
+      "parent": "hip",
+      "head_spine": [
+        -81.6,
+        182.0
+      ],
+      "angle": -90.0,
+      "length": 177.0
+    },
+    {
+      "name": "thigh_l",
+      "parent": "hip",
+      "head_spine": [
+        65.6,
+        182.0
+      ],
+      "angle": -90.0,
+      "length": 177.0
+    }
+  ],
+  "attachments": {
+    "back_hair_back": {
+      "type": "weighted_mesh",
+      "vertices": 624,
+      "triangles": 810,
+      "bones": [
+        "head",
+        "hair_r1",
+        "hair_r2",
+        "hair_r3",
+        "hair_r4",
+        "hair_l1",
+        "hair_l2",
+        "hair_l3",
+        "hair_l4",
+        "hair_b1",
+        "hair_b2"
+      ],
+      "influences_histogram": [
+        147,
+        214,
+        172,
+        91
+      ]
+    },
+    "handwear-l": {
+      "type": "weighted_mesh",
+      "vertices": 72,
+      "triangles": 100,
+      "bones": [
+        "chest",
+        "arm_l_up",
+        "arm_l_low"
+      ],
+      "influences_histogram": [
+        36,
+        35,
+        1,
+        0
+      ]
+    },
+    "handwear-r": {
+      "type": "weighted_mesh",
+      "vertices": 72,
+      "triangles": 100,
+      "bones": [
+        "chest",
+        "arm_r_up",
+        "arm_r_low"
+      ],
+      "influences_histogram": [
+        36,
+        34,
+        2,
+        0
+      ]
+    },
+    "back_hair_front": {
+      "type": "weighted_mesh",
+      "vertices": 231,
+      "triangles": 138,
+      "bones": [
+        "head",
+        "hair_r1",
+        "hair_r2",
+        "hair_r3",
+        "hair_r4",
+        "hair_l1",
+        "hair_l2",
+        "hair_l3",
+        "hair_l4"
+      ],
+      "influences_histogram": [
+        29,
+        87,
+        97,
+        18
+      ]
+    },
+    "ears-l": {
+      "type": "region",
+      "bone": "head"
+    },
+    "neck": {
+      "type": "weighted_mesh",
+      "vertices": 54,
+      "triangles": 80,
+      "bones": [
+        "chest",
+        "neck",
+        "head"
+      ],
+      "influences_histogram": [
+        0,
+        24,
+        30,
+        0
+      ]
+    },
+    "face": {
+      "type": "region",
+      "bone": "head"
+    },
+    "eyewhite-r": {
+      "type": "region",
+      "bone": "eye_r"
+    },
+    "eyewhite-l": {
+      "type": "region",
+      "bone": "eye_l"
+    },
+    "irides-r": {
+      "type": "region",
+      "bone": "eye_r"
+    },
+    "irides-l": {
+      "type": "region",
+      "bone": "eye_l"
+    },
+    "eyebrow-r": {
+      "type": "region",
+      "bone": "head"
+    },
+    "eyebrow-l": {
+      "type": "region",
+      "bone": "head"
+    },
+    "mouth": {
+      "type": "region",
+      "bone": "head"
+    },
+    "bottomwear": {
+      "type": "weighted_mesh",
+      "vertices": 117,
+      "triangles": 172,
+      "bones": [
+        "spine",
+        "hip",
+        "thigh_r",
+        "thigh_l"
+      ],
+      "influences_histogram": [
+        0,
+        50,
+        55,
+        12
+      ]
+    },
+    "topwear": {
+      "type": "weighted_mesh",
+      "vertices": 210,
+      "triangles": 316,
+      "bones": [
+        "spine",
+        "breath",
+        "breast_r",
+        "breast_l",
+        "shirt_r",
+        "shirt_l",
+        "neck",
+        "arm_r_up",
+        "arm_l_up"
+      ],
+      "influences_histogram": [
+        0,
+        27,
+        53,
+        130
+      ]
+    },
+    "legwear": {
+      "type": "weighted_mesh",
+      "vertices": 96,
+      "triangles": 142,
+      "bones": [
+        "hip",
+        "thigh_r",
+        "thigh_l"
+      ],
+      "influences_histogram": [
+        34,
+        38,
+        24,
+        0
+      ]
+    },
+    "nose": {
+      "type": "region",
+      "bone": "head"
+    },
+    "eyelash-l": {
+      "type": "region",
+      "bone": "eye_l"
+    },
+    "eyelash-r": {
+      "type": "region",
+      "bone": "eye_r"
+    },
+    "ears-r": {
+      "type": "region",
+      "bone": "head"
+    },
+    "front_hair": {
+      "type": "weighted_mesh",
+      "vertices": 224,
+      "triangles": 312,
+      "bones": [
+        "head",
+        "bang_r",
+        "bang_c",
+        "bang_l"
+      ],
+      "influences_histogram": [
+        26,
+        114,
+        84,
+        0
+      ]
+    },
+    "headwear": {
+      "type": "region",
+      "bone": "head"
+    }
+  },
+  "secondary_gains": {
+    "hair_side": 9.535603422750853,
+    "shirt": 248.45393243645276,
+    "breast": 317.6364189303054,
+    "breast_rot": 676.8813563905078,
+    "bangs": 177.98201992546285,
+    "hair_back": 11.567749781306825
+  },
+  "physics_constraints": [
+    "phys_breast_r",
+    "phys_breast_l",
+    "phys_bang_r",
+    "phys_bang_c",
+    "phys_bang_l",
+    "phys_hair_r1",
+    "phys_hair_r2",
+    "phys_hair_r3",
+    "phys_hair_r4",
+    "phys_hair_l1",
+    "phys_hair_l2",
+    "phys_hair_l3",
+    "phys_hair_l4",
+    "phys_hair_b1",
+    "phys_hair_b2",
+    "phys_shirt_r",
+    "phys_shirt_l"
+  ],
+  "animations": {
+    "idle": {
+      "duration": 8.0,
+      "bones_keyed": 31
+    },
+    "idle_physics": {
+      "duration": 8.0,
+      "bones_keyed": 14
+    }
+  }
+}
