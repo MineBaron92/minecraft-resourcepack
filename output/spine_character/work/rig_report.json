@@ -748,7 +748,7 @@
   "animations": {
     "bust_gain": {
       "idle": 15.1873,
-      "bust_bounce": 1.6205
+      "bust_bounce": 1.7095
     },
     "bust_R_px": 59.9,
     "secondary_gains": {
@@ -794,33 +794,33 @@
       "duration": 6.4,
       "bust": {
         "r": {
-          "tip_disp_px_max": 8.63,
+          "tip_disp_px_max": 8.67,
           "swing_deg_range": [
-            -1.22,
-            1.38
-          ],
-          "stretch_range": [
-            0.829,
-            1.209
-          ]
-        },
-        "l": {
-          "tip_disp_px_max": 7.93,
-          "swing_deg_range": [
-            -1.18,
-            1.18
+            -1.33,
+            1.26
           ],
           "stretch_range": [
             0.859,
-            1.192
+            1.205
+          ]
+        },
+        "l": {
+          "tip_disp_px_max": 7.7,
+          "swing_deg_range": [
+            -1.06,
+            0.94
+          ],
+          "stretch_range": [
+            0.87,
+            1.184
           ]
         }
       },
       "hair_caps": {
-        "hair_side": 0.019980191141598203,
-        "hair_back": 0.14237643568307173,
-        "bangs": 0.029624663545201848,
-        "shirt": 0.010665175715478257
+        "hair_side": 0.022275130060221582,
+        "hair_back": 0.16081913726300057,
+        "bangs": 0.05401025663876113,
+        "shirt": 0.032482431054086026
       }
     }
   }

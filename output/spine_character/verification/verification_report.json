@@ -42,10 +42,10 @@
         15.05
       ],
       "psnr_vs_reference_range": [
-        14.11,
+        14.1,
         21.42
       ],
-      "loop_seam_mae_last_vs_first": 0.141
+      "loop_seam_mae_last_vs_first": 0.15
     },
     "idle_physics": {
       "frames": 240,
@@ -57,31 +57,31 @@
         15.34,
         20.78
       ],
-      "loop_seam_mae_last_vs_first": 0.136
+      "loop_seam_mae_last_vs_first": 0.137
     },
     "bust_bounce": {
       "frames": 192,
       "mean_abs_change_vs_setup": [
-        5.24,
-        20.44
+        5.69,
+        20.1
       ],
       "psnr_vs_reference_range": [
-        12.95,
-        20.76
+        13.03,
+        20.2
       ],
-      "loop_seam_mae_last_vs_first": 2.895
+      "loop_seam_mae_last_vs_first": 0.5
     },
     "bust_bounce_physics": {
       "frames": 192,
       "mean_abs_change_vs_setup": [
-        5.22,
+        5.57,
         20.58
       ],
       "psnr_vs_reference_range": [
         12.91,
-        20.62
+        20.22
       ],
-      "loop_seam_mae_last_vs_first": 1.732
+      "loop_seam_mae_last_vs_first": 0.674
     }
   },
   "baseline_layout_json_vs_reference": {

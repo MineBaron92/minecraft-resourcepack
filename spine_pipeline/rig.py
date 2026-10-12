@@ -44,7 +44,7 @@ SPINE_DIR = os.path.join(OUT, "spine")
 IMG_DIR = os.path.join(OUT, "work", "images")
 NAME = "character"
 DUR = 8.0          # idle loop length (s)
-FPS_BAKE = 15      # key density for baked curves
+FPS_BAKE = 30      # key density for baked curves
 
 
 def to_spine(px, py):
@@ -395,19 +395,31 @@ def idle_primary(t, dur=8.0):
     return m
 
 
+HEAVE_KEYS = [  # (u, value, slope du) -- velocity-continuous (C1) Hermite spline
+    (0.00, 0.00, 0.0), (0.52, 1.00, 0.0), (0.60, 1.00, 0.0),
+    (0.69, 0.05, -14.0),          # fast, gravity-like fall ...
+    (0.74, -0.15, 0.0),           # ... decelerated over ~0.16 s (no infinite stop)
+    (0.86, 0.00, 0.0), (1.00, 0.00, 0.0)]
+
+
 def heave(u):
-    """One bounce cycle (u in [0,1)): slow lift, short hang, gravity-like drop,
-    small undershoot, settle. Shaped after the reference's body motion."""
-    if u < 0.52:
-        return smooth(u / 0.52)
-    if u < 0.60:
-        return 1.0
-    if u < 0.70:                       # ease-in fall (accelerating)
-        x = (u - 0.60) / 0.10
-        return 1.0 - 1.15 * x * x
-    if u < 0.82:                       # undershoot recovers
-        return -0.15 * (1 - smooth((u - 0.70) / 0.12))
+    """One bounce cycle (u in [0,1)): slow lift, short hang, fast drop, small
+    undershoot, settle. Shaped after the reference's body motion. C1 so the
+    driven springs never receive an instantaneous velocity change."""
+    u %= 1.0
+    for (u0, v0, m0), (u1, v1, m1) in zip(HEAVE_KEYS[:-1], HEAVE_KEYS[1:]):
+        if u0 <= u <= u1:
+            h = u1 - u0
+            x = (u - u0) / h
+            h00, h10 = 2 * x ** 3 - 3 * x ** 2 + 1, x ** 3 - 2 * x ** 2 + x
+            h01, h11 = -2 * x ** 3 + 3 * x ** 2, x ** 3 - x ** 2
+            return h00 * v0 + h10 * h * m0 + h01 * v1 + h11 * h * m1
     return 0.0
+
+
+def bump(u, a, b, c):
+    """0 -> 1 between a and b, back to 0 between b and c (smooth both ways)."""
+    return smooth((u - a) / (b - a)) * (1 - smooth((u - b) / (c - b)))
 
 
 def bust_primary(t, dur=6.4):
@@ -419,7 +431,7 @@ def bust_primary(t, dur=6.4):
     sw = lambda lag=0.0: math.sin(TAU * t / dur - lag)
     b = breath_wave(t, cyc)
     side = 1.0 if (t % dur) < cyc else -1.0                  # alternate the drop's lateral kick
-    kick = side * 2.2 * (1.0 - h) * (h > -0.2) * smooth(((t % cyc) / cyc - 0.58) / 0.1)
+    kick = side * 2.2 * bump((t % cyc) / cyc, 0.58, 0.70, 0.95)   # returns to 0 before the cycle ends
     m = {"hip": (2.8 * sw() + kick, 6.0 * h + 0.6 * b, 0.0, 1, 1),
          "spine": (0, 0, 1.1 * sw(0.4), 1, 1),
          "chest": (3.5 * h + 0.8 * b, 0, 1.4 * sw(0.8) - 0.8 * h, 1, 1),
