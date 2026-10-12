@@ -1,0 +1,401 @@
+{
+  "canvas": [
+    768,
+    768
+  ],
+  "draw_order": [
+    "back_hair_back",
+    "handwear-l",
+    "handwear-r",
+    "back_hair_front",
+    "ears-l",
+    "neck",
+    "face",
+    "eyewhite-r",
+    "eyewhite-l",
+    "irides-r",
+    "irides-l",
+    "eyebrow-r",
+    "eyebrow-l",
+    "mouth",
+    "bottomwear",
+    "topwear",
+    "legwear",
+    "nose",
+    "eyelash-l",
+    "eyelash-r",
+    "ears-r",
+    "front_hair",
+    "headwear"
+  ],
+  "parts": {
+    "back_hair_back": {
+      "z": 0,
+      "bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "pose": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "source": "split of back_hair"
+    },
+    "handwear-l": {
+      "z": 1,
+      "bbox": [
+        438,
+        266,
+        500,
+        647
+      ],
+      "pose": [
+        433.71,
+        265.72,
+        0.8,
+        -2.0
+      ],
+      "source": "010__handwear-l.png"
+    },
+    "handwear-r": {
+      "z": 2,
+      "bbox": [
+        271,
+        254,
+        331,
+        635
+      ],
+      "pose": [
+        266.39,
+        254.73,
+        0.8,
+        2.0
+      ],
+      "source": "009__handwear-r.png"
+    },
+    "back_hair_front": {
+      "z": 3,
+      "bbox": [
+        274,
+        57,
+        489,
+        527
+      ],
+      "pose": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "source": "split of back_hair"
+    },
+    "ears-l": {
+      "z": 4,
+      "bbox": [
+        423,
+        128,
+        473,
+        200
+      ],
+      "pose": [
+        423.58,
+        128.45,
+        1.32,
+        0.0
+      ],
+      "source": "016__ears-l.png"
+    },
+    "neck": {
+      "z": 5,
+      "bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "011__neck.png"
+    },
+    "face": {
+      "z": 6,
+      "bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "017__face.png"
+    },
+    "eyewhite-r": {
+      "z": 7,
+      "bbox": [
+        315,
+        169,
+        354,
+        185
+      ],
+      "pose": [
+        314.09,
+        168.86,
+        0.82,
+        0.0
+      ],
+      "source": "020__eyewhite-r.png"
+    },
+    "eyewhite-l": {
+      "z": 8,
+      "bbox": [
+        419,
+        149,
+        457,
+        169
+      ],
+      "pose": [
+        418.12,
+        149.44,
+        0.8,
+        0.0
+      ],
+      "source": "021__eyewhite-l.png"
+    },
+    "irides-r": {
+      "z": 9,
+      "bbox": [
+        329,
+        164,
+        357,
+        182
+      ],
+      "pose": [
+        328.84,
+        164.64,
+        1.02,
+        0.0
+      ],
+      "source": "023__irides-r.png"
+    },
+    "irides-l": {
+      "z": 10,
+      "bbox": [
+        398,
+        153,
+        424,
+        172
+      ],
+      "pose": [
+        398.04,
+        153.67,
+        0.93,
+        0.0
+      ],
+      "source": "024__irides-l.png"
+    },
+    "eyebrow-r": {
+      "z": 11,
+      "bbox": [
+        287,
+        139,
+        331,
+        160
+      ],
+      "pose": [
+        287.58,
+        139.24,
+        0.9,
+        0.0
+      ],
+      "source": "025__eyebrow-r.png"
+    },
+    "eyebrow-l": {
+      "z": 12,
+      "bbox": [
+        416,
+        132,
+        453,
+        147
+      ],
+      "pose": [
+        415.24,
+        132.4,
+        0.72,
+        0.0
+      ],
+      "source": "022__eyebrow-l.png"
+    },
+    "mouth": {
+      "z": 13,
+      "bbox": [
+        375,
+        214,
+        768,
+        768
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "018__mouth.png"
+    },
+    "bottomwear": {
+      "z": 14,
+      "bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "012__bottomwear.png"
+    },
+    "topwear": {
+      "z": 15,
+      "bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "013__topwear.png"
+    },
+    "legwear": {
+      "z": 16,
+      "bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "014__legwear.png"
+    },
+    "nose": {
+      "z": 17,
+      "bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "019__nose.png"
+    },
+    "eyelash-l": {
+      "z": 18,
+      "bbox": [
+        402,
+        144,
+        452,
+        167
+      ],
+      "pose": [
+        402.52,
+        143.84,
+        0.8,
+        0.0
+      ],
+      "source": "027__eyelash-l.png"
+    },
+    "eyelash-r": {
+      "z": 19,
+      "bbox": [
+        299,
+        161,
+        356,
+        185
+      ],
+      "pose": [
+        298.66,
+        161.25,
+        0.92,
+        0.0
+      ],
+      "source": "026__eyelash-r.png"
+    },
+    "ears-r": {
+      "z": 20,
+      "bbox": [
+        283,
+        166,
+        321,
+        208
+      ],
+      "pose": [
+        283.2,
+        166.41,
+        0.94,
+        0.0
+      ],
+      "source": "015__ears-r.png"
+    },
+    "front_hair": {
+      "z": 21,
+      "bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "028__front_hair.png"
+    },
+    "headwear": {
+      "z": 22,
+      "bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "029__headwear.png"
+    }
+  }
+}

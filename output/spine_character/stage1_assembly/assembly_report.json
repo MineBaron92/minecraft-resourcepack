@@ -1,0 +1,1042 @@
+{
+  "dropped_empty_layers": [
+    {
+      "file": "001__neckwear.png",
+      "solid_px": 0
+    },
+    {
+      "file": "002__footwear.png",
+      "solid_px": 0
+    },
+    {
+      "file": "003__tail.png",
+      "solid_px": 0
+    },
+    {
+      "file": "004__wings.png",
+      "solid_px": 0
+    },
+    {
+      "file": "005__objects.png",
+      "solid_px": 0
+    },
+    {
+      "file": "006__eyewear.png",
+      "solid_px": 0
+    },
+    {
+      "file": "007__earwear.png",
+      "solid_px": 0
+    }
+  ],
+  "initial": {
+    "eyelash-r": {
+      "method": "template(face-band)",
+      "rmse": 30.0,
+      "region": [
+        284,
+        120,
+        377,
+        210
+      ]
+    },
+    "irides-r": {
+      "method": "template(near lash)",
+      "rmse": 15.1
+    },
+    "eyewhite-r": {
+      "method": "relative to eyelash"
+    },
+    "eyebrow-r": {
+      "method": "relative to eyelash (hidden under bangs)"
+    },
+    "eyelash-l": {
+      "method": "template(face-band)",
+      "rmse": 14.38,
+      "region": [
+        367,
+        105,
+        475,
+        210
+      ]
+    },
+    "irides-l": {
+      "method": "template(near lash)",
+      "rmse": 19.56
+    },
+    "eyewhite-l": {
+      "method": "relative to eyelash"
+    },
+    "eyebrow-l": {
+      "method": "relative to eyelash (hidden under bangs)"
+    },
+    "ears": {
+      "method": "face silhouette sides at eye height"
+    },
+    "handwear-r": {
+      "method": "template(upper arm, beside torso, +-14deg)",
+      "rmse": 57.21,
+      "rot": 14
+    },
+    "handwear-l": {
+      "method": "template(upper arm, beside torso, +-14deg)",
+      "rmse": 68.4,
+      "rot": -14
+    }
+  },
+  "refine": [
+    {
+      "part": "handwear-r",
+      "pose": [
+        266.39,
+        254.73,
+        0.8,
+        2.0
+      ],
+      "window_err_before": 3.976,
+      "window_err_after": 2.644
+    },
+    {
+      "part": "handwear-l",
+      "pose": [
+        433.71,
+        265.72,
+        0.8,
+        -2.0
+      ],
+      "window_err_before": 4.002,
+      "window_err_after": 2.746
+    },
+    {
+      "part": "ears-r",
+      "pose": [
+        283.2,
+        166.41,
+        0.94,
+        0.0
+      ],
+      "window_err_before": 7.054,
+      "window_err_after": 5.827
+    },
+    {
+      "part": "ears-l",
+      "pose": [
+        423.58,
+        128.45,
+        1.32,
+        0.0
+      ],
+      "window_err_before": 15.256,
+      "window_err_after": 6.065
+    },
+    {
+      "part": "eyewhite-r",
+      "pose": [
+        309.13,
+        168.1,
+        0.9,
+        0.0
+      ],
+      "window_err_before": 12.812,
+      "window_err_after": 11.69
+    },
+    {
+      "part": "eyewhite-l",
+      "pose": [
+        410.52,
+        150.64,
+        0.7,
+        0.0
+      ],
+      "window_err_before": 15.208,
+      "window_err_after": 15.746
+    },
+    {
+      "part": "irides-r",
+      "pose": [
+        331,
+        167,
+        0.86,
+        0.0
+      ],
+      "window_err_before": 16.384,
+      "window_err_after": 16.384
+    },
+    {
+      "part": "irides-l",
+      "pose": [
+        403.28,
+        150.19,
+        0.77,
+        0.0
+      ],
+      "window_err_before": 19.084,
+      "window_err_after": 20.166
+    },
+    {
+      "part": "eyelash-r",
+      "pose": [
+        298.14,
+        162.25,
+        0.84,
+        0.0
+      ],
+      "window_err_before": 11.214,
+      "window_err_after": 10.644
+    },
+    {
+      "part": "eyelash-l",
+      "pose": [
+        404.14,
+        144.13,
+        0.78,
+        0.0
+      ],
+      "window_err_before": 14.066,
+      "window_err_after": 13.161
+    },
+    {
+      "part": "eyebrow-r",
+      "pose": [
+        289.58,
+        139.24,
+        0.9,
+        0.0
+      ],
+      "window_err_before": 12.347,
+      "window_err_after": 7.472
+    },
+    {
+      "part": "eyebrow-l",
+      "pose": [
+        415.24,
+        132.4,
+        0.72,
+        0.0
+      ],
+      "window_err_before": 9.469,
+      "window_err_after": 9.638
+    },
+    {
+      "part": "handwear-r",
+      "pose": [
+        266.39,
+        254.73,
+        0.8,
+        2.0
+      ],
+      "window_err_before": 2.644,
+      "window_err_after": 2.644
+    },
+    {
+      "part": "handwear-l",
+      "pose": [
+        433.71,
+        265.72,
+        0.8,
+        -2.0
+      ],
+      "window_err_before": 2.746,
+      "window_err_after": 2.746
+    },
+    {
+      "part": "ears-r",
+      "pose": [
+        283.2,
+        166.41,
+        0.94,
+        0.0
+      ],
+      "window_err_before": 5.624,
+      "window_err_after": 5.624
+    },
+    {
+      "part": "ears-l",
+      "pose": [
+        423.58,
+        128.45,
+        1.32,
+        0.0
+      ],
+      "window_err_before": 5.983,
+      "window_err_after": 5.983
+    },
+    {
+      "part": "eyewhite-r",
+      "pose": [
+        310.13,
+        168.1,
+        0.9,
+        0.0
+      ],
+      "window_err_before": 11.583,
+      "window_err_after": 11.604
+    },
+    {
+      "part": "eyewhite-l",
+      "pose": [
+        411.52,
+        150.64,
+        0.7,
+        0.0
+      ],
+      "window_err_before": 15.551,
+      "window_err_after": 15.289
+    },
+    {
+      "part": "irides-r",
+      "pose": [
+        331,
+        167,
+        0.86,
+        0.0
+      ],
+      "window_err_before": 16.212,
+      "window_err_after": 16.212
+    },
+    {
+      "part": "irides-l",
+      "pose": [
+        403.56,
+        150.38,
+        0.75,
+        0.0
+      ],
+      "window_err_before": 20.04,
+      "window_err_after": 20.438
+    },
+    {
+      "part": "eyelash-r",
+      "pose": [
+        298.14,
+        162.25,
+        0.84,
+        0.0
+      ],
+      "window_err_before": 9.968,
+      "window_err_after": 9.968
+    },
+    {
+      "part": "eyelash-l",
+      "pose": [
+        404.14,
+        144.13,
+        0.78,
+        0.0
+      ],
+      "window_err_before": 13.136,
+      "window_err_after": 13.136
+    },
+    {
+      "part": "eyebrow-r",
+      "pose": [
+        289.58,
+        139.24,
+        0.9,
+        0.0
+      ],
+      "window_err_before": 7.475,
+      "window_err_after": 7.475
+    },
+    {
+      "part": "eyebrow-l",
+      "pose": [
+        415.24,
+        132.4,
+        0.72,
+        0.0
+      ],
+      "window_err_before": 9.634,
+      "window_err_after": 9.634
+    },
+    {
+      "part": "neck",
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "window_err_before": 1.311,
+      "window_err_after": 1.311
+    },
+    {
+      "part": "face",
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "window_err_before": 1.311,
+      "window_err_after": 1.311
+    },
+    {
+      "part": "nose",
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "window_err_before": 1.311,
+      "window_err_after": 1.311
+    },
+    {
+      "part": "mouth",
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "window_err_before": 1.463,
+      "window_err_after": 1.463
+    },
+    {
+      "part": "legwear",
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "window_err_before": 1.311,
+      "window_err_after": 1.311
+    },
+    {
+      "part": "topwear",
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "window_err_before": 1.311,
+      "window_err_after": 1.311
+    },
+    {
+      "part": "bottomwear",
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "window_err_before": 1.311,
+      "window_err_after": 1.311
+    },
+    {
+      "part": "front_hair",
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "window_err_before": 1.311,
+      "window_err_after": 1.311
+    },
+    {
+      "part": "headwear",
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "window_err_before": 1.311,
+      "window_err_after": 1.311
+    },
+    {
+      "part": "handwear-r",
+      "pose": [
+        266.39,
+        254.73,
+        0.8,
+        2.0
+      ],
+      "window_err_before": 2.094,
+      "window_err_after": 2.094
+    },
+    {
+      "part": "handwear-l",
+      "pose": [
+        433.71,
+        265.72,
+        0.8,
+        -2.0
+      ],
+      "window_err_before": 2.184,
+      "window_err_after": 2.184
+    },
+    {
+      "part": "ears-r",
+      "pose": [
+        283.2,
+        166.41,
+        0.94,
+        0.0
+      ],
+      "window_err_before": 3.277,
+      "window_err_after": 3.277
+    },
+    {
+      "part": "ears-l",
+      "pose": [
+        423.58,
+        128.45,
+        1.32,
+        0.0
+      ],
+      "window_err_before": 5.446,
+      "window_err_after": 5.446
+    },
+    {
+      "part": "eyewhite-r",
+      "pose": [
+        314.09,
+        168.86,
+        0.82,
+        0.0
+      ],
+      "window_err_before": 8.534,
+      "window_err_after": 9.219
+    },
+    {
+      "part": "eyewhite-l",
+      "pose": [
+        418.12,
+        149.44,
+        0.8,
+        0.0
+      ],
+      "window_err_before": 18.777,
+      "window_err_after": 12.989
+    },
+    {
+      "part": "irides-r",
+      "pose": [
+        328.84,
+        164.64,
+        1.02,
+        0.0
+      ],
+      "window_err_before": 12.181,
+      "window_err_after": 7.028
+    },
+    {
+      "part": "irides-l",
+      "pose": [
+        398.04,
+        153.67,
+        0.93,
+        0.0
+      ],
+      "window_err_before": 24.213,
+      "window_err_after": 11.97
+    },
+    {
+      "part": "eyelash-r",
+      "pose": [
+        298.66,
+        161.25,
+        0.92,
+        0.0
+      ],
+      "window_err_before": 4.67,
+      "window_err_after": 3.23
+    },
+    {
+      "part": "eyelash-l",
+      "pose": [
+        402.52,
+        143.84,
+        0.8,
+        0.0
+      ],
+      "window_err_before": 8.414,
+      "window_err_after": 7.803
+    },
+    {
+      "part": "eyebrow-r",
+      "pose": [
+        287.58,
+        139.24,
+        0.9,
+        0.0
+      ],
+      "window_err_before": 0.759,
+      "window_err_after": 0.686
+    },
+    {
+      "part": "eyebrow-l",
+      "pose": [
+        415.24,
+        132.4,
+        0.72,
+        0.0
+      ],
+      "window_err_before": 5.649,
+      "window_err_after": 5.649
+    }
+  ],
+  "order_moves": [
+    {
+      "sweep": 0,
+      "move": "ears-r",
+      "from": 3,
+      "to": 20,
+      "err": 1.4407
+    },
+    {
+      "sweep": 0,
+      "move": "eyelash-r",
+      "from": 10,
+      "to": 19,
+      "err": 1.4373
+    },
+    {
+      "sweep": 0,
+      "move": "eyelash-l",
+      "from": 10,
+      "to": 18,
+      "err": 1.4352
+    },
+    {
+      "sweep": 0,
+      "move": "nose",
+      "from": 12,
+      "to": 17,
+      "err": 1.4301
+    },
+    {
+      "sweep": 0,
+      "move": "legwear",
+      "from": 13,
+      "to": 15,
+      "err": 1.343
+    },
+    {
+      "sweep": 0,
+      "move": "topwear",
+      "from": 13,
+      "to": 14,
+      "err": 1.3222
+    },
+    {
+      "sweep": 0,
+      "move": "back_hair_front",
+      "from": 16,
+      "to": 0,
+      "err": 1.2797
+    },
+    {
+      "sweep": 1,
+      "move": "back_hair_front",
+      "from": 0,
+      "to": 2,
+      "err": 1.2709
+    },
+    {
+      "sweep": 1,
+      "move": "handwear-l",
+      "from": 3,
+      "to": 1,
+      "err": 1.2657
+    }
+  ],
+  "back_hair_split": {
+    "overlap_px": 116232,
+    "hair_in_front_px": 16203,
+    "body_in_front_px": 63859,
+    "front_layer_px": 16956
+  },
+  "error_prior_order": 1.824,
+  "occlusion_votes": {
+    "back_hair_back|handwear-r": [
+      7472,
+      8261,
+      15861
+    ],
+    "back_hair_back|handwear-l": [
+      7837,
+      7817,
+      15830
+    ],
+    "back_hair_back|ears-r": [
+      136,
+      215,
+      362
+    ],
+    "back_hair_back|ears-l": [
+      739,
+      476,
+      1237
+    ],
+    "back_hair_back|neck": [
+      181,
+      3620,
+      3824
+    ],
+    "back_hair_back|face": [
+      177,
+      6245,
+      6522
+    ],
+    "back_hair_back|eyewhite-r": [
+      11,
+      199,
+      213
+    ],
+    "back_hair_back|eyewhite-l": [
+      9,
+      135,
+      145
+    ],
+    "back_hair_back|nose": [
+      1,
+      205,
+      206
+    ],
+    "back_hair_back|mouth": [
+      0,
+      31,
+      31
+    ],
+    "back_hair_back|legwear": [
+      0,
+      12074,
+      13218
+    ],
+    "back_hair_back|topwear": [
+      113,
+      45587,
+      46696
+    ],
+    "back_hair_back|bottomwear": [
+      1111,
+      20097,
+      41051
+    ],
+    "back_hair_back|front_hair": [
+      224,
+      5464,
+      11542
+    ],
+    "back_hair_back|headwear": [
+      11,
+      1550,
+      1605
+    ],
+    "handwear-r|legwear": [
+      0,
+      592,
+      613
+    ],
+    "handwear-r|topwear": [
+      6,
+      7606,
+      8204
+    ],
+    "handwear-r|bottomwear": [
+      5,
+      4504,
+      4560
+    ],
+    "handwear-r|back_hair_front": [
+      1,
+      110,
+      115
+    ],
+    "handwear-l|legwear": [
+      0,
+      589,
+      602
+    ],
+    "handwear-l|topwear": [
+      8,
+      7702,
+      8144
+    ],
+    "handwear-l|bottomwear": [
+      5,
+      4771,
+      4835
+    ],
+    "handwear-l|back_hair_front": [
+      4,
+      81,
+      93
+    ],
+    "ears-r|face": [
+      11,
+      59,
+      70
+    ],
+    "ears-r|back_hair_front": [
+      1,
+      594,
+      595
+    ],
+    "ears-r|front_hair": [
+      1,
+      727,
+      728
+    ],
+    "ears-l|face": [
+      83,
+      511,
+      681
+    ],
+    "ears-l|eyewhite-l": [
+      89,
+      46,
+      150
+    ],
+    "ears-l|eyelash-l": [
+      0,
+      73,
+      73
+    ],
+    "ears-l|back_hair_front": [
+      36,
+      849,
+      889
+    ],
+    "ears-l|front_hair": [
+      0,
+      1525,
+      1525
+    ],
+    "neck|face": [
+      447,
+      2299,
+      2758
+    ],
+    "neck|nose": [
+      4,
+      307,
+      314
+    ],
+    "neck|mouth": [
+      0,
+      31,
+      31
+    ],
+    "neck|topwear": [
+      0,
+      1097,
+      1097
+    ],
+    "neck|back_hair_front": [
+      34,
+      354,
+      392
+    ],
+    "neck|front_hair": [
+      4,
+      368,
+      373
+    ],
+    "face|eyewhite-r": [
+      369,
+      78,
+      488
+    ],
+    "face|eyewhite-l": [
+      184,
+      97,
+      311
+    ],
+    "face|irides-r": [
+      0,
+      217,
+      217
+    ],
+    "face|irides-l": [
+      0,
+      178,
+      178
+    ],
+    "face|eyelash-r": [
+      9,
+      224,
+      234
+    ],
+    "face|eyelash-l": [
+      0,
+      184,
+      184
+    ],
+    "face|eyebrow-r": [
+      0,
+      51,
+      51
+    ],
+    "face|nose": [
+      0,
+      264,
+      314
+    ],
+    "face|mouth": [
+      0,
+      17,
+      31
+    ],
+    "face|back_hair_front": [
+      869,
+      13745,
+      14671
+    ],
+    "face|front_hair": [
+      609,
+      13283,
+      14003
+    ],
+    "face|headwear": [
+      0,
+      2638,
+      2638
+    ],
+    "eyewhite-r|irides-r": [
+      0,
+      196,
+      196
+    ],
+    "eyewhite-r|eyelash-r": [
+      2,
+      34,
+      37
+    ],
+    "eyewhite-r|back_hair_front": [
+      23,
+      252,
+      275
+    ],
+    "eyewhite-l|irides-l": [
+      0,
+      55,
+      55
+    ],
+    "eyewhite-l|back_hair_front": [
+      16,
+      150,
+      166
+    ],
+    "eyewhite-l|front_hair": [
+      0,
+      44,
+      44
+    ],
+    "irides-r|back_hair_front": [
+      151,
+      27,
+      217
+    ],
+    "irides-l|eyelash-l": [
+      3,
+      45,
+      61
+    ],
+    "irides-l|back_hair_front": [
+      75,
+      71,
+      178
+    ],
+    "eyelash-r|back_hair_front": [
+      149,
+      76,
+      236
+    ],
+    "eyelash-r|front_hair": [
+      0,
+      80,
+      81
+    ],
+    "eyelash-l|back_hair_front": [
+      129,
+      28,
+      184
+    ],
+    "eyelash-l|front_hair": [
+      0,
+      60,
+      61
+    ],
+    "eyebrow-r|back_hair_front": [
+      3,
+      40,
+      51
+    ],
+    "eyebrow-r|front_hair": [
+      0,
+      50,
+      52
+    ],
+    "nose|back_hair_front": [
+      53,
+      38,
+      108
+    ],
+    "nose|front_hair": [
+      0,
+      75,
+      92
+    ],
+    "legwear|bottomwear": [
+      2139,
+      0,
+      13789
+    ],
+    "topwear|bottomwear": [
+      1851,
+      0,
+      2277
+    ],
+    "topwear|back_hair_front": [
+      630,
+      0,
+      726
+    ],
+    "bottomwear|back_hair_front": [
+      47,
+      666,
+      728
+    ],
+    "back_hair_front|front_hair": [
+      593,
+      12190,
+      14659
+    ],
+    "back_hair_front|headwear": [
+      27,
+      2059,
+      2170
+    ],
+    "front_hair|headwear": [
+      0,
+      3666,
+      3776
+    ]
+  },
+  "error_after_order": 1.1367,
+  "metrics_before_trim": {
+    "mean_abs_err_rgb": 1.073,
+    "mean_abs_err_in_silhouette": 1.472,
+    "psnr_db": 31.06,
+    "silhouette_iou": 0.9996,
+    "pixels_err_gt_40": 0.0057
+  },
+  "visibility_trim_px": {
+    "handwear-l": 345,
+    "handwear-r": 318
+  },
+  "metrics_final": {
+    "mean_abs_err_rgb": 0.96,
+    "mean_abs_err_in_silhouette": 1.224,
+    "psnr_db": 32.27,
+    "silhouette_iou": 0.9996,
+    "pixels_err_gt_40": 0.0032
+  }
+}
