@@ -1,8 +1,8 @@
 {
   "runtime": {
-    "bones": 33,
+    "bones": 37,
     "slots": 22,
-    "physics": 16,
+    "physics": 20,
     "animations": [
       [
         "idle",
@@ -34,13 +34,13 @@
   },
   "setup_pose_vs_reference": {
     "mae": 2.654,
-    "psnr_db": 24.19,
-    "mae_in_silhouette": 11.172,
+    "psnr_db": 24.18,
+    "mae_in_silhouette": 11.174,
     "ssim": 0.9705
   },
   "setup_pose_vs_stage1_composite": {
     "mae": 0.042,
-    "psnr_db": 57.75
+    "psnr_db": 57.85
   },
   "animations": {
     "idle": {
@@ -53,12 +53,12 @@
         13.63,
         13.69
       ],
-      "loop_seam_mae_last_vs_first": 0.125
+      "loop_seam_mae_last_vs_first": 0.124
     },
     "idle_physics": {
       "frames": 240,
       "mean_abs_change_vs_setup": [
-        19.24,
+        19.23,
         19.41
       ],
       "psnr_vs_reference_range": [
@@ -77,7 +77,7 @@
         13.63,
         13.71
       ],
-      "loop_seam_mae_last_vs_first": 0.22
+      "loop_seam_mae_last_vs_first": 0.223
     },
     "bust_bounce_physics": {
       "frames": 192,
@@ -89,31 +89,31 @@
         13.64,
         13.71
       ],
-      "loop_seam_mae_last_vs_first": 0.215
+      "loop_seam_mae_last_vs_first": 0.213
     },
     "jump_cheer": {
       "frames": 84,
       "mean_abs_change_vs_setup": [
-        18.18,
-        21.23
+        18.29,
+        21.16
       ],
       "psnr_vs_reference_range": [
-        13.09,
-        13.83
+        13.1,
+        13.86
       ],
-      "loop_seam_mae_last_vs_first": 0.011
+      "loop_seam_mae_last_vs_first": 0.018
     },
     "jump_cheer_physics": {
       "frames": 84,
       "mean_abs_change_vs_setup": [
-        18.32,
-        21.12
+        18.5,
+        21.09
       ],
       "psnr_vs_reference_range": [
-        13.12,
-        13.78
+        13.13,
+        13.83
       ],
-      "loop_seam_mae_last_vs_first": 0.001
+      "loop_seam_mae_last_vs_first": 0.032
     }
   },
   "preview_offline_written": true

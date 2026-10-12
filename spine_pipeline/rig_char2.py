@@ -97,8 +97,9 @@ def landmarks(L):
     for s in ("r", "l"):
         p0, p1 = pca_axis(L["handwear-" + s][:, :, 3])
         sh, hand = (p0, p1) if abs(p0[0] - tcx) < abs(p1[0] - tcx) else (p1, p0)
-        elbow = sh + 0.5 * (hand - sh)
-        lm["arm_" + s] = (tuple(sh), tuple(elbow), tuple(hand))
+        elbow = sh + 0.48 * (hand - sh)
+        wrist = sh + 0.80 * (hand - sh)
+        lm["arm_" + s] = (tuple(sh), tuple(elbow), tuple(wrist), tuple(hand))
     # legs: split the leg layer at the body centre line
     lg = L["legwear"][:, :, 3] > 128
     LG = lm["legwear"]
@@ -169,9 +170,13 @@ def build_skeleton(lm):
     for i, (x, y0, y1) in enumerate(lm["skirt"]):
         add(["skirt_r", "skirt_c", "skirt_l"][i], "hip", (x, y0), (x, y1))
     for s in ("r", "l"):
-        a0, a1, a2 = lm["arm_" + s]
-        add(f"arm_{s}_up", "chest", a0, a1)
+        a0, a1, a2, a3 = lm["arm_" + s]
+        # clavicle: lets the shoulder rise with the arm instead of a pin joint at the armpit
+        sx = a0[0] * 0.55 + ncx * 0.45
+        add("shoulder_" + s, "chest", (sx, a0[1] + 4), a0)
+        add(f"arm_{s}_up", "shoulder_" + s, a0, a1)
         add(f"arm_{s}_low", f"arm_{s}_up", a1, a2)
+        add("hand_" + s, f"arm_{s}_low", a2, a3)
     for s in ("r", "l"):
         l0, l1, l2 = lm["leg_" + s]
         add("thigh_" + s, "hip", l0, l1)
@@ -194,14 +199,16 @@ WEIGHTS = {
                 "breast_r_tip": (2.8, 14), "breast_l_tip": (2.8, 14),
                 # no arm influence: the upper-arm line runs along the cardigan side, and
                 # raised arms (jump_cheer) dragged those vertices into a sawtooth edge
-                "cardigan_r": (1.4, 14), "cardigan_l": (1.4, 14), "neck": (0.8, 10)},
+                "cardigan_r": (1.4, 14), "cardigan_l": (1.4, 14), "neck": (0.8, 10),
+                # shoulders only near the joint (small rotations: shrug), not along the arm line
+                "shoulder_r": (0.9, 10), "shoulder_l": (0.9, 10)},
     "bottomwear": {"hip": (1.0, 40), "spine": (0.6, 20), "skirt_r": (1.2, 26), "skirt_c": (1.2, 26),
                    "skirt_l": (1.2, 26)},
     "legwear": {"hip": (0.8, 35), "thigh_r": (1.0, 40), "thigh_l": (1.0, 40), "shin_r": (1.0, 40),
                 "shin_l": (1.0, 40)},
     "footwear": {"shin_r": (1.0, 40), "shin_l": (1.0, 40)},
-    "handwear-r": {"chest": (0.35, 12), "arm_r_up": (1, 26), "arm_r_low": (1, 26)},
-    "handwear-l": {"chest": (0.35, 12), "arm_l_up": (1, 26), "arm_l_low": (1, 26)},
+    "handwear-r": {"shoulder_r": (0.5, 12), "arm_r_up": (1, 24), "arm_r_low": (1, 22), "hand_r": (1.3, 12)},
+    "handwear-l": {"shoulder_l": (0.5, 12), "arm_l_up": (1, 24), "arm_l_low": (1, 22), "hand_l": (1.3, 12)},
     "neck": {"chest": (1.0, 14), "neck": (1.0, 20), "head": (1.0, 14)},
 }
 RIGID = {"face": "head", "ears-r": "head", "ears-l": "head", "nose": "head", "mouth": "head",
@@ -218,10 +225,16 @@ SECONDARY = {"pony1": ("rot+len", 1.5, 0.2, "ponytail"), "pony2": ("rot+len", 1.
              "cardigan_r": ("rot+len", 1.6, 0.28, "cardigan"), "cardigan_l": ("rot+len", 1.6, 0.28, "cardigan"),
              "skirt_r": ("rot+len", 1.4, 0.24, "skirt"), "skirt_c": ("rot+len", 1.5, 0.24, "skirt"),
              "skirt_l": ("rot+len", 1.4, 0.24, "skirt")}
+# forearm and hand trail the keyed upper arm (overlapping action) -- springs on top of the keys
+for _s in ("r", "l"):
+    SECONDARY[f"arm_{_s}_low"] = ("rot", 2.0 * (1.03 if _s == "l" else 1.0), 0.32, "forearm")
+    SECONDARY["hand_" + _s] = ("rot", 2.6 * (1.03 if _s == "l" else 1.0), 0.30, "hand")
+FIXED_GAIN = {"forearm": 0.55, "hand": 0.8}
 TARGET_IDLE = {"ponytail": 2.5, "tuft": 2.0, "bangs": 1.4, "cardigan": 1.6, "skirt": 1.4}
-_CAP_CALM = {"ponytail": 7.0, "tuft": 5.0, "bangs": 3.5, "cardigan": 4.5, "skirt": 4.5}
+_CAP_CALM = {"ponytail": 7.0, "tuft": 5.0, "bangs": 3.5, "cardigan": 4.5, "skirt": 4.5, "forearm": 6.0, "hand": 8.0}
 CAP = {"idle": _CAP_CALM, "bust_bounce": _CAP_CALM,
-       "jump_cheer": {"ponytail": 22.0, "tuft": 14.0, "bangs": 7.0, "cardigan": 12.0, "skirt": 9.0}}
+       "jump_cheer": {"ponytail": 22.0, "tuft": 14.0, "bangs": 7.0, "cardigan": 12.0, "skirt": 9.0,
+                      "forearm": 22.0, "hand": 28.0}}
 LEN_TARGET = {"jump_cheer": {"ponytail": 0.12, "tuft": 0.15, "bangs": 0.06, "cardigan": 0.08, "skirt": 0.10}}
 
 
@@ -307,15 +320,24 @@ def jump_primary(t, dur=2.8):
     tuck = 20.0 * R.bump(t, T_OFF + 0.06, T_APEX, T_LAND - 0.02)
     crouch = max(0.0, -y) / 26.0                            # 0..1 while knees are bent
     drift = 6.0 * air                                        # slight sideways travel -> asymmetric swing
-    au, al = herm(t, ARM_UP), herm(t, ARM_LOW)
+    # left arm a touch later and smaller than the right: no mirror-perfect puppet motion
+    au_r, al_r = herm(t, ARM_UP), herm(t, ARM_LOW)
+    au_l, al_l = 0.94 * herm(t - 0.05, ARM_UP), 0.94 * herm(t - 0.05, ARM_LOW)
     m = {"hip": (drift, y, 2.0 * air - 1.5 * crouch, 1, 1),
          "spine": (0, 0, -1.5 * air + 1.0 * crouch, 1, 1),
          "chest": (0, 0, 2.0 * air, 1, 1),
          "breath": (0, 0, 0, 1 - 0.035 * crouch + 0.03 * air, 1 + 0.02 * crouch),
          "neck": (0, 0, -2.0 * air + 1.5 * crouch, 1, 1),
          "head": (0, 0, 6.0 * air - 3.0 * crouch, 1, 1)}
-    m["arm_r_up"], m["arm_l_up"] = (0, 0, au, 1, 1), (0, 0, -au, 1, 1)
-    m["arm_r_low"], m["arm_l_low"] = (0, 0, al, 1, 1), (0, 0, -al, 1, 1)
+    for s, sg, au, al in (("r", 1, au_r, al_r), ("l", -1, au_l, al_l)):
+        raise_ = max(0.0, -au) / 105.0                       # 0 at rest .. 1 arms up
+        # elbow arcs: bends most mid-swing, nearly straight at the top
+        arc = -32.0 * math.sin(math.pi * min(1.0, raise_)) if au < 0 else 0.0
+        m["shoulder_" + s] = (0, 0, sg * -9.0 * raise_, 1, 1)          # shoulder lifts with the arm
+        # raised arms reach slightly toward the camera -> foreshorten the upper arm
+        m[f"arm_{s}_up"] = (0, 0, sg * au, 1 - 0.08 * raise_, 1 + 0.03 * raise_)
+        m[f"arm_{s}_low"] = (0, 0, sg * (al + arc), 1, 1)
+        m["hand_" + s] = (0, 0, sg * 8.0 * raise_, 1, 1)               # open, relaxed wrist at the top
     # legs: compress to keep the feet planted while the hip is below rest; in the air the
     # legs ride with the hip and the shins foreshorten a little (tuck)
     f = 1.0 - max(0.0, -y) / LEG["len"]
@@ -363,6 +385,7 @@ def main():
     # re-point the shared machinery at this character
     R.WEIGHTS, R.RIGID, R.GRID = WEIGHTS, RIGID, GRID
     R.SECONDARY, R.TARGET_IDLE, R.CAP, R.LEN_TARGET = SECONDARY, TARGET_IDLE, CAP, LEN_TARGET
+    R.FIXED_GAIN = FIXED_GAIN
     R.PROGRAMS = {"idle": (idle_primary, 8.0), "bust_bounce": (bust_primary, 6.4),
                   "jump_cheer": (jump_primary, 2.8)}
     R.BUST_TARGET = {"idle": 0.05, "bust_bounce": 0.22, "jump_cheer": 0.30}

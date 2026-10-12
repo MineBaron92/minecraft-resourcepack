@@ -128,8 +128,12 @@
         276.71307413325314
       ],
       [
-        387.96757151161603,
-        420.29071850084455
+        391.02473716894275,
+        414.54761272614087
+      ],
+      [
+        342.1100866517156,
+        506.4373051213994
       ],
       [
         311.53843007844864,
@@ -142,8 +146,12 @@
         281.3072803546045
       ],
       [
-        640.1935028511182,
-        431.20160219426265
+        637.81656915295,
+        425.20582932067634
+      ],
+      [
+        675.8475083236411,
+        521.1381952980576
       ],
       [
         699.6168453053231,
@@ -466,44 +474,84 @@
       "length": 116.2
     },
     {
-      "name": "arm_r_up",
+      "name": "shoulder_r",
       "parent": "chest",
+      "head_spine": [
+        -19.0,
+        743.3
+      ],
+      "angle": 172.0,
+      "length": 28.9
+    },
+    {
+      "name": "arm_r_up",
+      "parent": "shoulder_r",
       "head_spine": [
         -47.6,
         747.3
       ],
       "angle": -118.0,
-      "length": 162.7
+      "length": 156.1
     },
     {
       "name": "arm_r_low",
       "parent": "arm_r_up",
       "head_spine": [
-        -124.0,
-        603.7
+        -121.0,
+        609.5
       ],
       "angle": -118.0,
-      "length": 162.7
+      "length": 104.1
+    },
+    {
+      "name": "hand_r",
+      "parent": "arm_r_low",
+      "head_spine": [
+        -169.9,
+        517.6
+      ],
+      "angle": -118.0,
+      "length": 65.1
+    },
+    {
+      "name": "shoulder_l",
+      "parent": "chest",
+      "head_spine": [
+        45.0,
+        738.7
+      ],
+      "angle": 9.6,
+      "length": 24.1
     },
     {
       "name": "arm_l_up",
-      "parent": "chest",
+      "parent": "shoulder_l",
       "head_spine": [
         68.8,
         742.7
       ],
       "angle": -68.4,
-      "length": 161.2
+      "length": 154.8
     },
     {
       "name": "arm_l_low",
       "parent": "arm_l_up",
       "head_spine": [
-        128.2,
-        592.8
+        125.8,
+        598.8
       ],
       "angle": -68.4,
-      "length": 161.2
+      "length": 103.2
+    },
+    {
+      "name": "hand_l",
+      "parent": "arm_l_low",
+      "head_spine": [
+        163.8,
+        502.9
+      ],
+      "angle": -68.4,
+      "length": 64.5
     },
     {
       "name": "thigh_r",
@@ -570,13 +618,14 @@
       "vertices": 280,
       "triangles": 238,
       "bones": [
-        "chest",
+        "shoulder_r",
         "arm_r_up",
-        "arm_r_low"
+        "arm_r_low",
+        "hand_r"
       ],
       "influences_histogram": [
-        145,
-        135,
+        125,
+        155,
         0,
         0
       ]
@@ -586,13 +635,14 @@
       "vertices": 240,
       "triangles": 220,
       "bones": [
-        "chest",
+        "shoulder_l",
         "arm_l_up",
-        "arm_l_low"
+        "arm_l_low",
+        "hand_l"
       ],
       "influences_histogram": [
-        132,
-        108,
+        105,
+        135,
         0,
         0
       ]
@@ -659,13 +709,15 @@
         "breast_l_tip",
         "cardigan_r",
         "cardigan_l",
-        "neck"
+        "neck",
+        "shoulder_r",
+        "shoulder_l"
       ],
       "influences_histogram": [
         40,
-        93,
-        215,
-        489
+        79,
+        196,
+        522
       ]
     },
     "bottomwear": {
@@ -772,7 +824,11 @@
     "phys_cardigan_l",
     "phys_skirt_r",
     "phys_skirt_c",
-    "phys_skirt_l"
+    "phys_skirt_l",
+    "phys_arm_r_low",
+    "phys_hand_r",
+    "phys_arm_l_low",
+    "phys_hand_l"
   ],
   "animations": {
     "bust_gain": {
@@ -782,11 +838,13 @@
     },
     "bust_R_px": 37.0,
     "secondary_gains": {
-      "cardigan": 72.17767977234332,
-      "skirt": 236.9184112242874,
       "bangs": 172.4855583550191,
-      "tuft": 54.10941818260463,
-      "ponytail": 28.82742266688665
+      "cardigan": 72.17767977234332,
+      "hand": 0.8,
+      "ponytail": 28.82742266688665,
+      "skirt": 236.9184112242874,
+      "forearm": 0.55,
+      "tuft": 54.10941818260463
     },
     "idle": {
       "duration": 8.0,
@@ -815,11 +873,13 @@
         }
       },
       "hair_caps": {
-        "cardigan": 1.0,
-        "skirt": 1.0,
         "bangs": 1.0,
-        "tuft": 1.0,
-        "ponytail": 1.0
+        "cardigan": 1.0,
+        "hand": 1.0,
+        "ponytail": 1.0,
+        "skirt": 1.0,
+        "forearm": 1.0,
+        "tuft": 1.0
       },
       "len_gain": {}
     },
@@ -850,11 +910,13 @@
         }
       },
       "hair_caps": {
-        "cardigan": 0.06641936733321037,
-        "skirt": 0.07028926102709869,
         "bangs": 0.08021412417059796,
-        "tuft": 0.02451306770687736,
-        "ponytail": 0.00963781888729108
+        "cardigan": 0.06641936733321037,
+        "hand": 1.0,
+        "ponytail": 0.00963781888729108,
+        "skirt": 0.07028926102709869,
+        "forearm": 1.0,
+        "tuft": 0.02451306770687736
       },
       "len_gain": {}
     },
@@ -885,11 +947,13 @@
         }
       },
       "hair_caps": {
-        "cardigan": 0.02323011693125566,
-        "skirt": 0.009321482737964123,
         "bangs": 0.03952284137549684,
-        "tuft": 0.0078150341098721,
-        "ponytail": 0.005203011720887751
+        "cardigan": 0.02323011693125566,
+        "hand": 0.46165265084810775,
+        "ponytail": 0.005203011720887751,
+        "skirt": 0.009321482737964123,
+        "forearm": 0.631063899037382,
+        "tuft": 0.0078150341098721
       },
       "len_gain": {
         "ponytail": 0.17025078611880293,

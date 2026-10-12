@@ -489,6 +489,7 @@ TARGET_IDLE = {"hair_side": 2.4, "bangs": 1.6, "hair_back": 1.2, "shirt": 1.8}  
 CAP = {"hair_side": 7.0, "bangs": 4.0, "hair_back": 3.5, "shirt": 5.0}          # deg peak, any program
 
 
+FIXED_GAIN = {}   # group -> fixed spring gain (skips idle amplitude normalisation)
 LEN_TARGET = {}   # program -> {group: peak |scaleX - 1|} for "rot+len" bones (stretch along the strand)
 
 
@@ -507,7 +508,8 @@ def simulate_secondary(bones, bj, prim, dur, dt=1 / 120, cycles=3):
         t = k * dt
         d = prim(t % dur, dur)
         for n in names:
-            d[n] = (0, 0, st[n][0], 1, 1)
+            bx, by_, br, bsx, bsy = d.get(n, (0, 0, 0, 1, 1))   # springs ride ON TOP of keyed motion
+            d[n] = (bx, by_, br + st[n][0], bsx, bsy)
         world = fk(bones, bj, d)
         for n in names:
             kind, f, z, _ = SECONDARY[n]
@@ -654,7 +656,9 @@ def build_animations(bones, bj, lm):
     gains = {}
     for grp in set(v[3] for v in SECONDARY.values()):
         pk = max(max(abs(x[1]) for x in sec_idle[n]) for n in sec_idle if SECONDARY[n][3] == grp)
-        gains[grp] = TARGET_IDLE[grp] / max(pk, 1e-9)
+        # FIXED_GAIN groups keep the physical response (gain 1 = true rotational inertia),
+        # e.g. forearms/hands lagging behind a keyed upper arm
+        gains[grp] = FIXED_GAIN[grp] if grp in FIXED_GAIN else TARGET_IDLE[grp] / max(pk, 1e-9)
     anims, report = {}, {"bust_gain": {k: round(v, 4) for k, v in gain.items()}, "bust_R_px": round(R, 1), "secondary_gains": gains}
     for name, (prim, dur) in PROGRAMS.items():
         prim_tl = primary_timelines(prim, dur, FPS_BAKE)
@@ -679,7 +683,12 @@ def build_animations(bones, bj, lm):
             if grp in len_gain:
                 cols.append(1 + arr[:, 2] * len_gain[grp])
             ts, out = resample(arr[:, 0], cols, FPS_BAKE, dur)
-            baked[n] = {"rotate": keys_rot(ts, out[0])}
+            rot = out[0]
+            base = prim_tl.get(n, {})
+            if "rotate" in base:                                   # additive over the keyed rotation
+                rot = rot + np.array([k["value"] for k in base["rotate"]])
+            baked[n] = dict(base)
+            baked[n]["rotate"] = keys_rot(ts, rot)
             if len(out) > 1:
                 baked[n]["scale"] = keys_xy(ts, out[1], np.ones_like(out[1]))
         bust = simulate_bust(bones, bj, prim, dur, R, gain[name])
