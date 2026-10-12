@@ -489,9 +489,16 @@ TARGET_IDLE = {"hair_side": 2.4, "bangs": 1.6, "hair_back": 1.2, "shirt": 1.8}  
 CAP = {"hair_side": 7.0, "bangs": 4.0, "hair_back": 3.5, "shirt": 5.0}          # deg peak, any program
 
 
+LEN_TARGET = {}   # program -> {group: peak |scaleX - 1|} for "rot+len" bones (stretch along the strand)
+
+
 def simulate_secondary(bones, bj, prim, dur, dt=1 / 120, cycles=3):
+    """Angular spring per bone (sideways swing from acceleration across the
+    bone); kinds containing "len" also get a length spring driven by the
+    acceleration ALONG the bone, so hanging strands/skirts react to vertical
+    motion (stretch on take-off, float/compress in free fall)."""
     names = [b.name for b in bones if b.name in SECONDARY]
-    st = {n: [0.0, 0.0] for n in names}          # angle (deg), angular velocity (rad/s)
+    st = {n: [0.0, 0.0, 0.0, 0.0] for n in names}   # angle (deg), ang. vel (rad/s), stretch, stretch vel
     hist = {}
     samples = {n: [] for n in names}
     steps = int(round(dur / dt))
@@ -503,7 +510,7 @@ def simulate_secondary(bones, bj, prim, dur, dt=1 / 120, cycles=3):
             d[n] = (0, 0, st[n][0], 1, 1)
         world = fk(bones, bj, d)
         for n in names:
-            _, f, z, _ = SECONDARY[n]
+            kind, f, z, _ = SECONDARY[n]
             kk, c = (TAU * f) ** 2, 2 * z * TAU * f
             pos, ang = world[n]
             _, pang = world[by[n].parent]
@@ -511,12 +518,17 @@ def simulate_secondary(bones, bj, prim, dur, dt=1 / 120, cycles=3):
             acc = (pos - 2 * h[1] + h[0]) / dt ** 2 if k > 1 else np.zeros(2)
             alpha = math.radians(pang - 2 * h[3] + h[2]) / dt ** 2 if k > 1 else 0.0
             a = math.radians(ang)
-            torque = -(acc @ np.array([-math.sin(a), math.cos(a)])) / max(by[n].length, 10.0) - alpha
+            L = max(by[n].length, 10.0)
+            torque = -(acc @ np.array([-math.sin(a), math.cos(a)])) / L - alpha
             st[n][1] += (-kk * math.radians(st[n][0]) - c * st[n][1] + torque) * dt
             st[n][0] += math.degrees(st[n][1] * dt)
+            if "len" in kind:
+                along = acc @ np.array([math.cos(a), math.sin(a)])
+                st[n][3] += (-2 * kk * st[n][2] - 1.2 * c * st[n][3] - along / L) * dt
+                st[n][2] += st[n][3] * dt
             hist[n] = [h[1], pos, h[3], pang]
             if k >= steps * (cycles - 1):
-                samples[n].append((t - steps * (cycles - 1) * dt, st[n][0]))
+                samples[n].append((t - steps * (cycles - 1) * dt, st[n][0], st[n][2]))
     return samples
 
 
@@ -649,14 +661,27 @@ def build_animations(bones, bj, lm):
         sec = sec_idle if name == "idle" else simulate_secondary(bones, bj, prim, dur)
         baked = dict(prim_tl)
         caps = {}
+        capd = CAP.get(name, CAP) if isinstance(next(iter(CAP.values())), dict) else CAP
         for grp in gains:
             pk = max(max(abs(x[1]) for x in sec[n]) for n in sec if SECONDARY[n][3] == grp) * gains[grp]
-            caps[grp] = min(1.0, CAP[grp] / max(pk, 1e-9))
+            caps[grp] = min(1.0, capd[grp] / max(pk, 1e-9))
+        lt = LEN_TARGET.get(name, {})
+        len_gain = {}
+        for grp, target in lt.items():
+            members = [n for n in sec if SECONDARY[n][3] == grp and "len" in SECONDARY[n][0]]
+            if members:
+                pk = max(max(abs(x[2]) for x in sec[n]) for n in members)
+                len_gain[grp] = target / max(pk, 1e-9)
         for n, ser in sec.items():
             grp = SECONDARY[n][3]
             arr = np.array(ser)
-            ts, (th,) = resample(arr[:, 0], [arr[:, 1] * gains[grp] * caps[grp]], FPS_BAKE, dur)
-            baked[n] = {"rotate": keys_rot(ts, th)}
+            cols = [arr[:, 1] * gains[grp] * caps[grp]]
+            if grp in len_gain:
+                cols.append(1 + arr[:, 2] * len_gain[grp])
+            ts, out = resample(arr[:, 0], cols, FPS_BAKE, dur)
+            baked[n] = {"rotate": keys_rot(ts, out[0])}
+            if len(out) > 1:
+                baked[n]["scale"] = keys_xy(ts, out[1], np.ones_like(out[1]))
         bust = simulate_bust(bones, bj, prim, dur, R, gain[name])
         stats = {}
         for side in ("r", "l"):
@@ -669,7 +694,7 @@ def build_animations(bones, bj, lm):
                            "stretch_range": [round(float(sv.min()), 3), round(float(sv.max()), 3)]}
         anims[name] = baked
         anims[name + "_physics"] = dict(prim_tl)
-        report[name] = {"duration": dur, "bust": stats, "hair_caps": caps}
+        report[name] = {"duration": dur, "bust": stats, "hair_caps": caps, "len_gain": len_gain}
     return anims, report
 
 

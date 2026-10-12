@@ -24,8 +24,14 @@ window.setup = async function (jsonText, atlasText, pngDataUrl) {
   return { bones: data.bones.length, slots: data.slots.length, physics: data.physicsConstraints.length,
            animations: data.animations.map(a => [a.name, a.duration]) };
 };
-function draw() {
+function draw(pad) {
   const { ctx, skeleton, renderer } = window._s;
+  const size = ctx.canvas.width;
+  // setup pose: exact 1:1 framing (compared with the reference); animations: 25% wider, so
+  // jumps and raised arms stay in frame
+  const v = pad ? size * 1.25 : size;
+  renderer.camera.viewportWidth = v; renderer.camera.viewportHeight = v;
+  renderer.camera.position.y = pad ? size * 0.6 : size / 2;
   const gl = ctx.gl;
   gl.clearColor(1, 1, 1, 1); gl.clear(gl.COLOR_BUFFER_BIT);
   renderer.camera.update();
@@ -53,7 +59,7 @@ window.renderAnim = function (name, times, warmLoops) {
   while (idx < targets.length) {
     state.update(dt); skeleton.update(dt); state.apply(skeleton);
     skeleton.updateWorldTransform(spine.Physics.update); t += dt;
-    while (idx < targets.length && t >= targets[idx] - 1e-6) { out.push(draw()); idx++; }
+    while (idx < targets.length && t >= targets[idx] - 1e-6) { out.push(draw(true)); idx++; }
   }
   return out;
 };

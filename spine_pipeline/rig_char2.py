@@ -175,8 +175,15 @@ def build_skeleton(lm):
     for s in ("r", "l"):
         l0, l1, l2 = lm["leg_" + s]
         add("thigh_" + s, "hip", l0, l1)
-        add("shin_" + s, "root", l1, l2)          # planted: does not follow the hip
+        # front view: a crouch reads as the legs FORESHORTENING (knees toward the camera),
+        # so legs compress along their length instead of bending sideways. noScale keeps
+        # the shin's own scale independent of the thigh's (its position still follows).
+        add("shin_" + s, "thigh_" + s, l1, l2, inherit="noScale")
+    LEG["len"] = float(np.mean([np.hypot(*(np.subtract(lm["leg_" + s][2], lm["leg_" + s][0]))) for s in "rl"]))
     return bones
+
+
+LEG = {"len": 400.0}
 
 
 HAIR_BACK = {"head": (1.0, 55), "pony1": (1.2, 22), "pony2": (1.2, 22), "pony3": (1.2, 24), "tuft": (1.2, 16)}
@@ -185,15 +192,16 @@ WEIGHTS = {
     "front_hair": {"head": (1.0, 40), "bang_r": (1, 22), "bang_c": (1, 22), "bang_l": (1, 22)},
     "topwear": {"spine": (1.0, 35), "breath": (1.3, 80), "breast_r": (1.5, 12), "breast_l": (1.5, 12),
                 "breast_r_tip": (2.8, 14), "breast_l_tip": (2.8, 14),
-                "cardigan_r": (1.4, 14), "cardigan_l": (1.4, 14), "neck": (0.8, 10),
-                "arm_r_up": (0.8, 14), "arm_l_up": (0.8, 14)},
+                # no arm influence: the upper-arm line runs along the cardigan side, and
+                # raised arms (jump_cheer) dragged those vertices into a sawtooth edge
+                "cardigan_r": (1.4, 14), "cardigan_l": (1.4, 14), "neck": (0.8, 10)},
     "bottomwear": {"hip": (1.0, 40), "spine": (0.6, 20), "skirt_r": (1.2, 26), "skirt_c": (1.2, 26),
                    "skirt_l": (1.2, 26)},
     "legwear": {"hip": (0.8, 35), "thigh_r": (1.0, 40), "thigh_l": (1.0, 40), "shin_r": (1.0, 40),
                 "shin_l": (1.0, 40)},
     "footwear": {"shin_r": (1.0, 40), "shin_l": (1.0, 40)},
-    "handwear-r": {"chest": (0.6, 18), "arm_r_up": (1, 26), "arm_r_low": (1, 26)},
-    "handwear-l": {"chest": (0.6, 18), "arm_l_up": (1, 26), "arm_l_low": (1, 26)},
+    "handwear-r": {"chest": (0.35, 12), "arm_r_up": (1, 26), "arm_r_low": (1, 26)},
+    "handwear-l": {"chest": (0.35, 12), "arm_l_up": (1, 26), "arm_l_low": (1, 26)},
     "neck": {"chest": (1.0, 14), "neck": (1.0, 20), "head": (1.0, 14)},
 }
 RIGID = {"face": "head", "ears-r": "head", "ears-l": "head", "nose": "head", "mouth": "head",
@@ -203,15 +211,18 @@ RIGID = {"face": "head", "ears-r": "head", "ears-l": "head", "nose": "head", "mo
 GRID = {"back_hair": 16, "front_hair": 14, "topwear": 7, "bottomwear": 14, "legwear": 22, "footwear": 24,
         "handwear-r": 18, "handwear-l": 18, "neck": 12}
 
-SECONDARY = {"pony1": ("rot", 1.5, 0.2, "ponytail"), "pony2": ("rot", 1.3, 0.2, "ponytail"),
-             "pony3": ("rot", 1.15, 0.2, "ponytail"), "tuft": ("rot", 2.2, 0.25, "tuft"),
-             "bang_r": ("rot", 1.9, 0.25, "bangs"), "bang_c": ("rot", 1.9, 0.25, "bangs"),
-             "bang_l": ("rot", 1.9, 0.25, "bangs"),
-             "cardigan_r": ("rot", 1.6, 0.28, "cardigan"), "cardigan_l": ("rot", 1.6, 0.28, "cardigan"),
-             "skirt_r": ("rot", 1.4, 0.24, "skirt"), "skirt_c": ("rot", 1.5, 0.24, "skirt"),
-             "skirt_l": ("rot", 1.4, 0.24, "skirt")}
+SECONDARY = {"pony1": ("rot+len", 1.5, 0.2, "ponytail"), "pony2": ("rot+len", 1.3, 0.2, "ponytail"),
+             "pony3": ("rot+len", 1.15, 0.2, "ponytail"), "tuft": ("rot+len", 2.2, 0.25, "tuft"),
+             "bang_r": ("rot+len", 1.9, 0.25, "bangs"), "bang_c": ("rot+len", 1.9, 0.25, "bangs"),
+             "bang_l": ("rot+len", 1.9, 0.25, "bangs"),
+             "cardigan_r": ("rot+len", 1.6, 0.28, "cardigan"), "cardigan_l": ("rot+len", 1.6, 0.28, "cardigan"),
+             "skirt_r": ("rot+len", 1.4, 0.24, "skirt"), "skirt_c": ("rot+len", 1.5, 0.24, "skirt"),
+             "skirt_l": ("rot+len", 1.4, 0.24, "skirt")}
 TARGET_IDLE = {"ponytail": 2.5, "tuft": 2.0, "bangs": 1.4, "cardigan": 1.6, "skirt": 1.4}
-CAP = {"ponytail": 7.0, "tuft": 5.0, "bangs": 3.5, "cardigan": 4.5, "skirt": 4.5}
+_CAP_CALM = {"ponytail": 7.0, "tuft": 5.0, "bangs": 3.5, "cardigan": 4.5, "skirt": 4.5}
+CAP = {"idle": _CAP_CALM, "bust_bounce": _CAP_CALM,
+       "jump_cheer": {"ponytail": 22.0, "tuft": 14.0, "bangs": 7.0, "cardigan": 12.0, "skirt": 9.0}}
+LEN_TARGET = {"jump_cheer": {"ponytail": 0.12, "tuft": 0.15, "bangs": 0.06, "cardigan": 0.08, "skirt": 0.10}}
 
 
 # ─── motion programs (scaled to this figure; feet stay planted) ──────────────
@@ -259,6 +270,66 @@ def bust_primary(t, dur=6.4):
     return m
 
 
+def herm(t, keys):
+    """C1 Hermite through (t, value, slope) keys; clamps outside."""
+    if t <= keys[0][0]:
+        return keys[0][1]
+    for (t0, v0, m0), (t1, v1, m1) in zip(keys[:-1], keys[1:]):
+        if t0 <= t <= t1:
+            h = t1 - t0
+            x = (t - t0) / h
+            return ((2 * x ** 3 - 3 * x ** 2 + 1) * v0 + (x ** 3 - 2 * x ** 2 + x) * h * m0 +
+                    (-2 * x ** 3 + 3 * x ** 2) * v1 + (x ** 3 - x ** 2) * h * m1)
+    return keys[-1][1]
+
+
+# Jump timing (s): anticipation crouch -> take-off -> ballistic arc -> landing absorb -> settle -> hold
+T_OFF, T_APEX, T_LAND, JUMP_H = 0.74, 1.05, 1.36, 72.0
+V0 = 2 * JUMP_H / (T_LAND - T_OFF)                        # take-off speed of a symmetric parabola
+HIP_Y = [(0.0, 0, 0), (0.30, 0, 0), (0.62, -26, 0), (T_OFF, 0, V0)]
+LAND_Y = [(T_LAND, 0, -V0), (1.52, -22, 0), (1.80, 3, 0), (2.05, 0, 0), (2.8, 0, 0)]
+ARM_UP = [(0.0, 0, 0), (0.30, 0, 0), (0.62, 14, 0), (0.82, -70, -420), (1.00, -105, 0), (1.30, -100, 0),
+          (1.52, -72, 120), (1.85, -20, 120), (2.2, 3, 0), (2.45, 0, 0), (2.8, 0, 0)]
+ARM_LOW = [(0.0, 0, 0), (0.30, 0, 0), (0.62, 10, 0), (0.85, -15, 0), (1.05, -28, 0), (1.35, -22, 0),
+           (1.60, -6, 0), (2.0, 4, 0), (2.4, 0, 0), (2.8, 0, 0)]
+
+
+def jump_primary(t, dur=2.8):
+    if t <= T_OFF:
+        y = herm(t, HIP_Y)
+    elif t < T_LAND:
+        tt = t - T_OFF
+        g = V0 / (T_APEX - T_OFF)
+        y = V0 * tt - 0.5 * g * tt * tt                     # ballistic
+    else:
+        y = herm(t, LAND_Y)
+    air = R.bump(t, T_OFF, T_APEX, T_LAND)                  # 0..1..0 over the flight
+    tuck = 20.0 * R.bump(t, T_OFF + 0.06, T_APEX, T_LAND - 0.02)
+    crouch = max(0.0, -y) / 26.0                            # 0..1 while knees are bent
+    drift = 6.0 * air                                        # slight sideways travel -> asymmetric swing
+    au, al = herm(t, ARM_UP), herm(t, ARM_LOW)
+    m = {"hip": (drift, y, 2.0 * air - 1.5 * crouch, 1, 1),
+         "spine": (0, 0, -1.5 * air + 1.0 * crouch, 1, 1),
+         "chest": (0, 0, 2.0 * air, 1, 1),
+         "breath": (0, 0, 0, 1 - 0.035 * crouch + 0.03 * air, 1 + 0.02 * crouch),
+         "neck": (0, 0, -2.0 * air + 1.5 * crouch, 1, 1),
+         "head": (0, 0, 6.0 * air - 3.0 * crouch, 1, 1)}
+    m["arm_r_up"], m["arm_l_up"] = (0, 0, au, 1, 1), (0, 0, -au, 1, 1)
+    m["arm_r_low"], m["arm_l_low"] = (0, 0, al, 1, 1), (0, 0, -al, 1, 1)
+    # legs: compress to keep the feet planted while the hip is below rest; in the air the
+    # legs ride with the hip and the shins foreshorten a little (tuck)
+    f = 1.0 - max(0.0, -y) / LEG["len"]
+    widen = 1.0 + 1.5 * (1.0 - f)                           # foreshortened thigh reads wider
+    tuck_f = 1.0 - 0.12 * tuck / 20.0
+    for s in ("r", "l"):
+        m["thigh_" + s] = (0, 0, 0, f, widen)
+        m["shin_" + s] = (0, 0, 0, f * tuck_f, 1.0 + 0.5 * (1.0 - f))
+    bl = R.blink_value(t, (1.50,))
+    for s in ("r", "l"):
+        m["eye_" + s] = (0, 0, 0, 1, bl)
+    return m
+
+
 def weight_map(layers, bones, atts, lm, path):
     names = [b.name for b in bones]
     a = atts["topwear"]
@@ -291,8 +362,10 @@ def weight_map(layers, bones, atts, lm, path):
 def main():
     # re-point the shared machinery at this character
     R.WEIGHTS, R.RIGID, R.GRID = WEIGHTS, RIGID, GRID
-    R.SECONDARY, R.TARGET_IDLE, R.CAP = SECONDARY, TARGET_IDLE, CAP
-    R.PROGRAMS = {"idle": (idle_primary, 8.0), "bust_bounce": (bust_primary, 6.4)}
+    R.SECONDARY, R.TARGET_IDLE, R.CAP, R.LEN_TARGET = SECONDARY, TARGET_IDLE, CAP, LEN_TARGET
+    R.PROGRAMS = {"idle": (idle_primary, 8.0), "bust_bounce": (bust_primary, 6.4),
+                  "jump_cheer": (jump_primary, 2.8)}
+    R.BUST_TARGET = {"idle": 0.05, "bust_bounce": 0.22, "jump_cheer": 0.30}
     R.bust_R = lambda lm: lm["bust_R"]
     R.bust_centre = lambda lm, s: lm["bust_" + s]
 

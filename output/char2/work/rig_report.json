@@ -517,7 +517,7 @@
     },
     {
       "name": "shin_r",
-      "parent": "root",
+      "parent": "thigh_r",
       "head_spine": [
         -39.8,
         325.6
@@ -537,7 +537,7 @@
     },
     {
       "name": "shin_l",
-      "parent": "root",
+      "parent": "thigh_l",
       "head_spine": [
         40.0,
         314.3
@@ -575,8 +575,8 @@
         "arm_r_low"
       ],
       "influences_histogram": [
-        142,
-        138,
+        145,
+        135,
         0,
         0
       ]
@@ -591,8 +591,8 @@
         "arm_l_low"
       ],
       "influences_histogram": [
-        130,
-        110,
+        132,
+        108,
         0,
         0
       ]
@@ -659,15 +659,13 @@
         "breast_l_tip",
         "cardigan_r",
         "cardigan_l",
-        "neck",
-        "arm_r_up",
-        "arm_l_up"
+        "neck"
       ],
       "influences_histogram": [
-        26,
-        47,
-        159,
-        605
+        40,
+        93,
+        215,
+        489
       ]
     },
     "bottomwear": {
@@ -779,15 +777,16 @@
   "animations": {
     "bust_gain": {
       "idle": 13.5205,
-      "bust_bounce": 1.6908
+      "bust_bounce": 1.6908,
+      "jump_cheer": 0.278
     },
     "bust_R_px": 37.0,
     "secondary_gains": {
+      "cardigan": 72.17767977234332,
       "skirt": 236.9184112242874,
       "bangs": 172.4855583550191,
-      "ponytail": 28.82742266688665,
-      "cardigan": 72.17767977234332,
-      "tuft": 54.10941818260463
+      "tuft": 54.10941818260463,
+      "ponytail": 28.82742266688665
     },
     "idle": {
       "duration": 8.0,
@@ -816,12 +815,13 @@
         }
       },
       "hair_caps": {
+        "cardigan": 1.0,
         "skirt": 1.0,
         "bangs": 1.0,
-        "ponytail": 1.0,
-        "cardigan": 1.0,
-        "tuft": 1.0
-      }
+        "tuft": 1.0,
+        "ponytail": 1.0
+      },
+      "len_gain": {}
     },
     "bust_bounce": {
       "duration": 6.4,
@@ -850,11 +850,53 @@
         }
       },
       "hair_caps": {
+        "cardigan": 0.06641936733321037,
         "skirt": 0.07028926102709869,
         "bangs": 0.08021412417059796,
-        "ponytail": 0.00963781888729108,
-        "cardigan": 0.06641936733321037,
-        "tuft": 0.02451306770687736
+        "tuft": 0.02451306770687736,
+        "ponytail": 0.00963781888729108
+      },
+      "len_gain": {}
+    },
+    "jump_cheer": {
+      "duration": 2.8,
+      "bust": {
+        "r": {
+          "tip_disp_px_max": 11.95,
+          "swing_deg_range": [
+            -0.26,
+            0.44
+          ],
+          "stretch_range": [
+            0.82,
+            1.22
+          ]
+        },
+        "l": {
+          "tip_disp_px_max": 10.74,
+          "swing_deg_range": [
+            -0.27,
+            0.43
+          ],
+          "stretch_range": [
+            0.82,
+            1.22
+          ]
+        }
+      },
+      "hair_caps": {
+        "cardigan": 0.02323011693125566,
+        "skirt": 0.009321482737964123,
+        "bangs": 0.03952284137549684,
+        "tuft": 0.0078150341098721,
+        "ponytail": 0.005203011720887751
+      },
+      "len_gain": {
+        "ponytail": 0.17025078611880293,
+        "tuft": 0.54514276347761,
+        "bangs": 0.6274135778785576,
+        "cardigan": 0.18405770642677002,
+        "skirt": 0.44265409924799287
       }
     }
   }

@@ -163,6 +163,14 @@ def main():
         ims[0].save(os.path.join(VER, "bust_bounce_closeup.gif"), save_all=True, append_images=ims[1:],
                     duration=int(round(2000 / fps)), loop=0, optimize=True)
     hh = refw.shape[0]
+    # full-body MP4 for every other baked animation (30 fps, looped 3x)
+    if shutil.which("ffmpeg"):
+        for anim in [a for a, _ in info["animations"] if not a.endswith("_physics") and a not in ("idle", "bust_bounce")]:
+            d = os.path.join(FR, anim)
+            subprocess.check_call(["ffmpeg", "-v", "error", "-y", "-stream_loop", "2", "-framerate",
+                                   str(info.get("frame_fps", 30)), "-i", os.path.join(d, "f%03d.png"),
+                                   "-vf", "scale=768:768,format=yuv420p", "-c:v", "libx264", "-crf", "20",
+                                   "-movflags", "+faststart", os.path.join(VER, anim + ".mp4")])
     side = np.concatenate([refw, np.full((hh, 8, 3), 40), setup, np.full((hh, 8, 3), 40),
                            np.clip(np.abs(setup - refw) * 3, 0, 255)], 1)
     Image.fromarray(side.astype(np.uint8)).save(os.path.join(VER, "setup_vs_reference.png"))
