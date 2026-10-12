@@ -145,17 +145,25 @@ def main():
     bb = os.path.join(FR, "bust_bounce")
     if os.path.isdir(bb) and shutil.which("ffmpeg"):
         fps = info.get("frame_fps", 30)
+        box = (245, 225, 515, 475)                      # character 1 default
+        rr = os.path.join(OUT, "work", "rig_report.json")
+        if os.path.exists(rr):
+            box = tuple(json.load(open(rr)).get("bust_closeup_box", box))
+        bw, bh = box[2] - box[0], box[3] - box[1]
+        sc = 600 / bh
         for name, vf in (("bust_bounce.mp4", "scale=768:768"),
-                         ("bust_bounce_closeup.mp4", "crop=270:250:245:225,scale=648:600:flags=lanczos")):
+                         ("bust_bounce_closeup.mp4",
+                          f"crop={bw}:{bh}:{box[0]}:{box[1]},scale={2 * round(bw * sc / 2)}:600:flags=lanczos")):
             subprocess.check_call(["ffmpeg", "-v", "error", "-y", "-stream_loop", "2", "-framerate", str(fps),
                                    "-i", os.path.join(bb, "f%03d.png"), "-vf", vf + ",format=yuv420p",
                                    "-c:v", "libx264", "-crf", "20", "-movflags", "+faststart",
                                    os.path.join(VER, name)])
         frames = sorted(glob.glob(os.path.join(bb, "*.png")))[::2]
-        ims = [Image.open(f).convert("RGB").crop((245, 225, 515, 475)) for f in frames]
+        ims = [Image.open(f).convert("RGB").crop(box) for f in frames]
         ims[0].save(os.path.join(VER, "bust_bounce_closeup.gif"), save_all=True, append_images=ims[1:],
                     duration=int(round(2000 / fps)), loop=0, optimize=True)
-    side = np.concatenate([refw, np.full((768, 8, 3), 40), setup, np.full((768, 8, 3), 40),
+    hh = refw.shape[0]
+    side = np.concatenate([refw, np.full((hh, 8, 3), 40), setup, np.full((hh, 8, 3), 40),
                            np.clip(np.abs(setup - refw) * 3, 0, 255)], 1)
     Image.fromarray(side.astype(np.uint8)).save(os.path.join(VER, "setup_vs_reference.png"))
     rep["preview_offline_written"] = offline

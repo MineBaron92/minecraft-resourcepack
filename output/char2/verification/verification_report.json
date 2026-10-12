@@ -1,0 +1,88 @@
+{
+  "runtime": {
+    "bones": 33,
+    "slots": 22,
+    "physics": 16,
+    "animations": [
+      [
+        "idle",
+        8
+      ],
+      [
+        "idle_physics",
+        8
+      ],
+      [
+        "bust_bounce",
+        6.400000095367432
+      ],
+      [
+        "bust_bounce_physics",
+        6.400000095367432
+      ]
+    ],
+    "errors": [],
+    "frame_fps": 30
+  },
+  "setup_pose_vs_reference": {
+    "mae": 2.654,
+    "psnr_db": 24.18,
+    "mae_in_silhouette": 11.172,
+    "ssim": 0.9705
+  },
+  "setup_pose_vs_stage1_composite": {
+    "mae": 0.043,
+    "psnr_db": 57.73
+  },
+  "animations": {
+    "idle": {
+      "frames": 240,
+      "mean_abs_change_vs_setup": [
+        1.95,
+        4.4
+      ],
+      "psnr_vs_reference_range": [
+        19.98,
+        22.39
+      ],
+      "loop_seam_mae_last_vs_first": 0.169
+    },
+    "idle_physics": {
+      "frames": 240,
+      "mean_abs_change_vs_setup": [
+        1.86,
+        4.19
+      ],
+      "psnr_vs_reference_range": [
+        20.18,
+        22.49
+      ],
+      "loop_seam_mae_last_vs_first": 0.165
+    },
+    "bust_bounce": {
+      "frames": 192,
+      "mean_abs_change_vs_setup": [
+        2.26,
+        5.98
+      ],
+      "psnr_vs_reference_range": [
+        18.97,
+        22.09
+      ],
+      "loop_seam_mae_last_vs_first": 0.315
+    },
+    "bust_bounce_physics": {
+      "frames": 192,
+      "mean_abs_change_vs_setup": [
+        2.25,
+        5.94
+      ],
+      "psnr_vs_reference_range": [
+        19.0,
+        22.04
+      ],
+      "loop_seam_mae_last_vs_first": 0.306
+    }
+  },
+  "preview_offline_written": true
+}

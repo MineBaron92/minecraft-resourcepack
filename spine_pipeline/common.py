@@ -8,8 +8,9 @@ from PIL import Image
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ASSETS = os.path.join(ROOT, "assets", "original")
 PARTS_DIR = os.path.join(ASSETS, "parts")
-REFERENCE = os.path.join(ASSETS, "reference", "assembled_character.png")
-OUT = os.path.join(ROOT, "output", "spine_character")
+# Overridable per character (see psd_import.py / run_char2.sh)
+REFERENCE = os.environ.get("SPINE_REF", os.path.join(ASSETS, "reference", "assembled_character.png"))
+OUT = os.environ.get("SPINE_OUT", os.path.join(ROOT, "output", "spine_character"))
 
 ALPHA_NOISE = 16      # see-through leaves faint alpha everywhere; below this is noise
 ALPHA_SOLID = 128     # "opaque" for matching / occlusion statistics

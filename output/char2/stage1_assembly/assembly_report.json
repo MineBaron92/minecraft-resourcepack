@@ -1,0 +1,124 @@
+{
+  "canvas": [
+    1024,
+    1024
+  ],
+  "dropped_empty_layers": [
+    {
+      "layer": "neckwear",
+      "solid_px": 0
+    },
+    {
+      "layer": "tail",
+      "solid_px": 0
+    },
+    {
+      "layer": "wings",
+      "solid_px": 0
+    },
+    {
+      "layer": "objects",
+      "solid_px": 0
+    },
+    {
+      "layer": "headwear",
+      "solid_px": 0
+    },
+    {
+      "layer": "eyewear",
+      "solid_px": 0
+    },
+    {
+      "layer": "earwear",
+      "solid_px": 0
+    }
+  ],
+  "depth_mean": {
+    "back_hair": 226.28,
+    "handwear-r": 219.2,
+    "handwear-l": 218.87,
+    "footwear": 202.54,
+    "legwear": 202.37,
+    "neck": 188.87,
+    "topwear": 181.37,
+    "bottomwear": 175.36,
+    "ears-r": 163.03,
+    "ears-l": 162.72,
+    "face": 133.59,
+    "mouth": 138.04,
+    "nose": 130.43,
+    "eyewhite-r": 91.05,
+    "eyewhite-l": 86.98,
+    "irides-r": 70.08,
+    "eyebrow-r": 55.34,
+    "irides-l": 60.33,
+    "eyelash-r": 50.63,
+    "eyelash-l": 50.53,
+    "eyebrow-l": 34.96,
+    "front_hair": 23.5
+  },
+  "back_hair_split": {
+    "overlap_px": 17952,
+    "hair_in_front_px": 936,
+    "body_in_front_px": 7179,
+    "front_layer_px": 0,
+    "applied": false
+  },
+  "error_psd_order": 2.6903,
+  "order_moves": [
+    {
+      "sweep": 0,
+      "move": "footwear",
+      "from": 3,
+      "to": 4,
+      "err": 2.2402
+    }
+  ],
+  "error_final_order": 2.6539,
+  "psd_order": [
+    "back_hair",
+    "handwear-r",
+    "handwear-l",
+    "footwear",
+    "legwear",
+    "neck",
+    "topwear",
+    "bottomwear",
+    "ears-r",
+    "ears-l",
+    "face",
+    "mouth",
+    "nose",
+    "eyewhite-r",
+    "eyewhite-l",
+    "irides-r",
+    "eyebrow-r",
+    "irides-l",
+    "eyelash-r",
+    "eyelash-l",
+    "eyebrow-l",
+    "front_hair"
+  ],
+  "order_conflicts_vs_original": [
+    {
+      "below": "eyelash-l",
+      "above": "front_hair",
+      "original_says_below_is_on_top_px": 51,
+      "agree_px": 13
+    }
+  ],
+  "order_conflicts_vs_depth": [
+    {
+      "below": "neck",
+      "above": "topwear",
+      "depth_says_below_is_nearer_by": 3.9,
+      "overlap_px": 800
+    }
+  ],
+  "metrics_vs_original": {
+    "mean_abs_err_rgb": 2.519,
+    "mean_abs_err_in_silhouette": 11.18,
+    "psnr_db": 24.84,
+    "silhouette_iou": 0.9759
+  }
+}

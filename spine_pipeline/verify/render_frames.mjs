@@ -25,7 +25,8 @@ const png = "data:image/png;base64," + fs.readFileSync(path.join(spineDir, "char
 
 const browser = await chromium.launch({ executablePath: chromePath || "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
   args: ["--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader"] });
-const page = await browser.newPage({ viewport: { width: 768, height: 768 } });
+const size = JSON.parse(fs.readFileSync(path.join(spineDir, "character.json"), "utf8")).skeleton.width || 768;
+const page = await browser.newPage({ viewport: { width: size, height: size } });
 const errors = [];
 page.on("pageerror", e => errors.push(String(e)));
 page.on("console", m => { if (m.type() === "error") errors.push(m.text()); });

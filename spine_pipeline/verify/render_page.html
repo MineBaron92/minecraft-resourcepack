@@ -7,6 +7,8 @@
 // Deterministic renderer used only for verification (official spine-webgl 4.2 runtime).
 window.setup = async function (jsonText, atlasText, pngDataUrl) {
   const canvas = document.getElementById("c");
+  const sk = JSON.parse(jsonText).skeleton; const size = sk.width || 768;
+  canvas.width = size; canvas.height = size;
   const ctx = new spine.ManagedWebGLRenderingContext(canvas, { alpha: false, preserveDrawingBuffer: true });
   const img = new Image();
   await new Promise((ok, err) => { img.onload = ok; img.onerror = err; img.src = pngDataUrl; });
@@ -16,8 +18,8 @@ window.setup = async function (jsonText, atlasText, pngDataUrl) {
   const skeleton = new spine.Skeleton(data);
   const state = new spine.AnimationState(new spine.AnimationStateData(data));
   const renderer = new spine.SceneRenderer(canvas, ctx, true);
-  renderer.camera.position.x = 0; renderer.camera.position.y = 384;
-  renderer.camera.viewportWidth = 768; renderer.camera.viewportHeight = 768;
+  renderer.camera.position.x = 0; renderer.camera.position.y = size / 2;
+  renderer.camera.viewportWidth = size; renderer.camera.viewportHeight = size;
   window._s = { ctx, skeleton, state, renderer, data };
   return { bones: data.bones.length, slots: data.slots.length, physics: data.physicsConstraints.length,
            animations: data.animations.map(a => [a.name, a.duration]) };

@@ -1,0 +1,406 @@
+{
+  "canvas": [
+    1024,
+    1024
+  ],
+  "draw_order": [
+    "back_hair",
+    "handwear-r",
+    "handwear-l",
+    "legwear",
+    "footwear",
+    "neck",
+    "topwear",
+    "bottomwear",
+    "ears-r",
+    "ears-l",
+    "face",
+    "mouth",
+    "nose",
+    "eyewhite-r",
+    "eyewhite-l",
+    "irides-r",
+    "eyebrow-r",
+    "irides-l",
+    "eyelash-r",
+    "eyelash-l",
+    "eyebrow-l",
+    "front_hair"
+  ],
+  "parts": {
+    "back_hair": {
+      "z": 0,
+      "bbox": [
+        442,
+        0,
+        651,
+        201
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "psd",
+      "depth_mean": 226.28
+    },
+    "handwear-r": {
+      "z": 1,
+      "bbox": [
+        254,
+        253,
+        471,
+        577
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "psd",
+      "depth_mean": 219.2
+    },
+    "handwear-l": {
+      "z": 2,
+      "bbox": [
+        574,
+        261,
+        761,
+        591
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "psd",
+      "depth_mean": 218.87
+    },
+    "legwear": {
+      "z": 3,
+      "bbox": [
+        397,
+        491,
+        620,
+        941
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "psd",
+      "depth_mean": 202.37
+    },
+    "footwear": {
+      "z": 4,
+      "bbox": [
+        444,
+        899,
+        589,
+        1020
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "psd",
+      "depth_mean": 202.54
+    },
+    "neck": {
+      "z": 5,
+      "bbox": [
+        501,
+        202,
+        556,
+        268
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "psd",
+      "depth_mean": 188.87
+    },
+    "topwear": {
+      "z": 6,
+      "bbox": [
+        419,
+        245,
+        619,
+        421
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "psd",
+      "depth_mean": 181.37
+    },
+    "bottomwear": {
+      "z": 7,
+      "bbox": [
+        367,
+        400,
+        646,
+        564
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "psd",
+      "depth_mean": 175.36
+    },
+    "ears-r": {
+      "z": 8,
+      "bbox": [
+        440,
+        169,
+        477,
+        218
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "psd",
+      "depth_mean": 163.03
+    },
+    "ears-l": {
+      "z": 9,
+      "bbox": [
+        570,
+        157,
+        610,
+        207
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "psd",
+      "depth_mean": 162.72
+    },
+    "face": {
+      "z": 10,
+      "bbox": [
+        444,
+        73,
+        586,
+        234
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "psd",
+      "depth_mean": 133.59
+    },
+    "mouth": {
+      "z": 11,
+      "bbox": [
+        498,
+        186,
+        549,
+        221
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "psd",
+      "depth_mean": 138.04
+    },
+    "nose": {
+      "z": 12,
+      "bbox": [
+        508,
+        170,
+        518,
+        183
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "psd",
+      "depth_mean": 130.43
+    },
+    "eyewhite-r": {
+      "z": 13,
+      "bbox": [
+        458,
+        156,
+        503,
+        187
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "psd",
+      "depth_mean": 91.05
+    },
+    "eyewhite-l": {
+      "z": 14,
+      "bbox": [
+        531,
+        146,
+        576,
+        178
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "psd",
+      "depth_mean": 86.98
+    },
+    "irides-r": {
+      "z": 15,
+      "bbox": [
+        475,
+        156,
+        499,
+        184
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "psd",
+      "depth_mean": 70.08
+    },
+    "eyebrow-r": {
+      "z": 16,
+      "bbox": [
+        463,
+        132,
+        501,
+        137
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "psd",
+      "depth_mean": 55.34
+    },
+    "irides-l": {
+      "z": 17,
+      "bbox": [
+        538,
+        148,
+        562,
+        176
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "psd",
+      "depth_mean": 60.33
+    },
+    "eyelash-r": {
+      "z": 18,
+      "bbox": [
+        448,
+        147,
+        504,
+        178
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "psd",
+      "depth_mean": 50.63
+    },
+    "eyelash-l": {
+      "z": 19,
+      "bbox": [
+        529,
+        140,
+        584,
+        171
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "psd",
+      "depth_mean": 50.53
+    },
+    "eyebrow-l": {
+      "z": 20,
+      "bbox": [
+        527,
+        121,
+        564,
+        134
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "psd",
+      "depth_mean": 34.96
+    },
+    "front_hair": {
+      "z": 21,
+      "bbox": [
+        389,
+        45,
+        598,
+        249
+      ],
+      "pose": [
+        0,
+        0,
+        1.0,
+        0.0
+      ],
+      "source": "psd",
+      "depth_mean": 23.5
+    }
+  }
+}
