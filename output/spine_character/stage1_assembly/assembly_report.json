@@ -579,6 +579,28 @@
       ],
       "window_err_before": 5.649,
       "window_err_after": 5.649
+    },
+    {
+      "eye_group": "-r",
+      "window": [
+        287,
+        151,
+        369,
+        197
+      ],
+      "err_before": 3.677,
+      "err_after": 1.818
+    },
+    {
+      "eye_group": "-l",
+      "window": [
+        386,
+        134,
+        469,
+        184
+      ],
+      "err_before": 8.145,
+      "err_after": 2.176
     }
   ],
   "order_moves": [
@@ -1022,21 +1044,21 @@
   },
   "error_after_order": 1.1367,
   "metrics_before_trim": {
-    "mean_abs_err_rgb": 1.073,
-    "mean_abs_err_in_silhouette": 1.472,
-    "psnr_db": 31.06,
+    "mean_abs_err_rgb": 1.019,
+    "mean_abs_err_in_silhouette": 1.353,
+    "psnr_db": 31.54,
     "silhouette_iou": 0.9996,
-    "pixels_err_gt_40": 0.0057
+    "pixels_err_gt_40": 0.0045
   },
   "visibility_trim_px": {
     "handwear-l": 345,
     "handwear-r": 318
   },
   "metrics_final": {
-    "mean_abs_err_rgb": 0.96,
-    "mean_abs_err_in_silhouette": 1.224,
-    "psnr_db": 32.27,
+    "mean_abs_err_rgb": 0.907,
+    "mean_abs_err_in_silhouette": 1.105,
+    "psnr_db": 32.91,
     "silhouette_iou": 0.9996,
-    "pixels_err_gt_40": 0.0032
+    "pixels_err_gt_40": 0.002
   }
 }

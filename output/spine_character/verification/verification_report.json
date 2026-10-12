@@ -17,10 +17,10 @@
     "frame_fps": 10
   },
   "setup_pose_vs_reference": {
-    "mae": 0.982,
-    "psnr_db": 32.18,
-    "mae_in_silhouette": 1.259,
-    "ssim": 0.9892
+    "mae": 0.929,
+    "psnr_db": 32.81,
+    "mae_in_silhouette": 1.14,
+    "ssim": 0.9903
   },
   "setup_pose_vs_stage1_composite": {
     "mae": 0.038,
@@ -31,13 +31,13 @@
       "frames": 80,
       "mean_abs_change_vs_setup": [
         4.61,
-        15.53
+        15.52
       ],
       "psnr_vs_reference_range": [
-        14.0,
-        21.04
+        14.01,
+        21.07
       ],
-      "loop_seam_mae_last_vs_first": 0.407
+      "loop_seam_mae_last_vs_first": 0.405
     },
     "idle_physics": {
       "frames": 80,
@@ -46,10 +46,10 @@
         11.96
       ],
       "psnr_vs_reference_range": [
-        15.34,
-        20.77
+        15.35,
+        20.79
       ],
-      "loop_seam_mae_last_vs_first": 0.353
+      "loop_seam_mae_last_vs_first": 0.352
     }
   },
   "baseline_layout_json_vs_reference": {

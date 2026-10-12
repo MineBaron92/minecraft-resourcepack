@@ -1,6 +1,6 @@
 {
   "skeleton": {
-    "hash": "af8b89ca9d2520a7a15b",
+    "hash": "7053607b0aa0f1726c55",
     "spine": "4.2.0",
     "x": -384,
     "y": 0,
@@ -82,16 +82,16 @@
     {
       "name": "eye_r",
       "parent": "head",
-      "x": 39.0,
-      "y": 57.5,
+      "x": 38.5,
+      "y": 58.0,
       "rotation": -90.0,
       "length": 10.0
     },
     {
       "name": "eye_l",
       "parent": "head",
-      "x": 56.0,
-      "y": -41.5,
+      "x": 53.0,
+      "y": -36.5,
       "rotation": -90.0,
       "length": 10.0
     },
@@ -16830,26 +16830,26 @@
         },
         "eyewhite-r": {
           "eyewhite-r": {
-            "x": 7.5,
-            "y": -1.0,
+            "x": 8.5,
+            "y": 1.0,
             "rotation": -0.0,
-            "width": 44,
-            "height": 20
+            "width": 51,
+            "height": 23
           }
         },
         "eyewhite-l": {
           "eyewhite-l": {
-            "x": 11.5,
+            "x": -5.5,
             "y": 0.0,
             "rotation": -0.0,
-            "width": 42,
-            "height": 24
+            "width": 52,
+            "height": 28
           }
         },
         "irides-r": {
           "irides-r": {
-            "x": 15.0,
-            "y": 3.0,
+            "x": 15.5,
+            "y": 3.5,
             "rotation": -0.0,
             "width": 33,
             "height": 22
@@ -16857,11 +16857,11 @@
         },
         "irides-l": {
           "irides-l": {
-            "x": -15.0,
-            "y": -3.5,
+            "x": -10.0,
+            "y": 0.0,
             "rotation": -0.0,
-            "width": 31,
-            "height": 23
+            "width": 33,
+            "height": 24
           }
         },
         "eyebrow-r": {
@@ -25018,17 +25018,17 @@
             "x": 0.5,
             "y": 3.5,
             "rotation": -0.0,
-            "width": 54,
-            "height": 27
+            "width": 66,
+            "height": 33
           }
         },
         "eyelash-r": {
           "eyelash-r": {
-            "x": -0.5,
-            "y": 3.0,
+            "x": 0.0,
+            "y": 2.5,
             "rotation": -0.0,
-            "width": 62,
-            "height": 28
+            "width": 66,
+            "height": 30
           }
         },
         "ears-r": {

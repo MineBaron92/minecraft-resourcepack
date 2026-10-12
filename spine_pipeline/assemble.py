@@ -273,6 +273,36 @@ def refine(scene, name, steps=(8, 4, 2, 1), s_range=(0.6, 1.4), rot_range=(-25, 
     return pose
 
 
+def eye_group_search(scene, side, rounds=3, log=None):
+    """Exhaustive joint search for one eye (lash, white, iris). The eye white is
+    mostly hidden under the iris and lashes, so greedy refinement stalls in a
+    wrong local minimum; a full grid per part, iterated, does not."""
+    names = ["eyelash" + side, "eyewhite" + side, "irides" + side]
+    boxes = [bbox(scene.layers[n][:, :, 3], 8) for n in names]
+    win = (min(b[0] for b in boxes) - 12, min(b[1] for b in boxes) - 10,
+           max(b[2] for b in boxes) + 12, max(b[3] for b in boxes) + 12)
+    start = scene.error(window=win)
+    for _ in range(rounds):
+        for n in names:
+            src = scene.src[n]
+            cx, cy = pose_centre(src, scene.pose[n])
+            s0 = scene.pose[n][2]
+            best_e, best_p = scene.error(window=win), scene.pose[n]
+            R = 4 if n.startswith("eyelash") else 10
+            for ds in np.arange(-0.16, 0.17, 0.04):
+                for dx in range(-R, R + 1):
+                    for dy in range(-R, R + 1):
+                        p = centre_pose(src, cx + dx, cy + dy, s0 + ds)
+                        lay, _ = warp(src, *p)
+                        e = scene.error(window=win, override=(n, lay))
+                        if e < best_e - 1e-4:
+                            best_e, best_p = e, p
+            scene.place(n, best_p)
+    if log is not None:
+        log.append({"eye_group": side, "window": win, "err_before": round(start, 3),
+                    "err_after": round(scene.error(window=win), 3)})
+
+
 # ─── back-hair split ─────────────────────────────────────────────────────────
 
 def split_back_hair(scene, hair, body_names):
@@ -582,6 +612,10 @@ def main():
         is_arm = n.startswith("handwear")
         refine(scene, n, allow_rot=is_arm, steps=(2, 1), margin=30 if is_arm else 14,
                log=report["refine"])
+
+    # eyes: exhaustive joint search (greedy refinement leaves the eye white misplaced)
+    for side in ("-r", "-l"):
+        eye_group_search(scene, side, log=report["refine"])
 
     comp_before_trim = scene.render()
     report["metrics_before_trim"] = metrics(scene, comp_before_trim)
