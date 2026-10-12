@@ -1,8 +1,8 @@
 {
   "runtime": {
-    "bones": 32,
+    "bones": 34,
     "slots": 23,
-    "physics": 17,
+    "physics": 19,
     "animations": [
       [
         "idle",
@@ -11,45 +11,77 @@
       [
         "idle_physics",
         8
+      ],
+      [
+        "bust_bounce",
+        6.400000095367432
+      ],
+      [
+        "bust_bounce_physics",
+        6.400000095367432
       ]
     ],
     "errors": [],
-    "frame_fps": 10
+    "frame_fps": 30
   },
   "setup_pose_vs_reference": {
-    "mae": 0.929,
+    "mae": 0.93,
     "psnr_db": 32.81,
-    "mae_in_silhouette": 1.14,
+    "mae_in_silhouette": 1.142,
     "ssim": 0.9903
   },
   "setup_pose_vs_stage1_composite": {
-    "mae": 0.038,
-    "psnr_db": 54.85
+    "mae": 0.039,
+    "psnr_db": 54.83
   },
   "animations": {
     "idle": {
-      "frames": 80,
+      "frames": 240,
       "mean_abs_change_vs_setup": [
-        4.61,
-        15.52
+        4.27,
+        15.05
       ],
       "psnr_vs_reference_range": [
-        14.01,
-        21.07
+        14.11,
+        21.42
       ],
-      "loop_seam_mae_last_vs_first": 0.405
+      "loop_seam_mae_last_vs_first": 0.141
     },
     "idle_physics": {
-      "frames": 80,
+      "frames": 240,
       "mean_abs_change_vs_setup": [
-        4.9,
-        11.96
+        4.92,
+        11.99
       ],
       "psnr_vs_reference_range": [
-        15.35,
-        20.79
+        15.34,
+        20.78
       ],
-      "loop_seam_mae_last_vs_first": 0.352
+      "loop_seam_mae_last_vs_first": 0.136
+    },
+    "bust_bounce": {
+      "frames": 192,
+      "mean_abs_change_vs_setup": [
+        5.24,
+        20.44
+      ],
+      "psnr_vs_reference_range": [
+        12.95,
+        20.76
+      ],
+      "loop_seam_mae_last_vs_first": 2.895
+    },
+    "bust_bounce_physics": {
+      "frames": 192,
+      "mean_abs_change_vs_setup": [
+        5.22,
+        20.58
+      ],
+      "psnr_vs_reference_range": [
+        12.91,
+        20.62
+      ],
+      "loop_seam_mae_last_vs_first": 1.732
     }
   },
   "baseline_layout_json_vs_reference": {

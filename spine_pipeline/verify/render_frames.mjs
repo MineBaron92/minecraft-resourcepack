@@ -34,9 +34,8 @@ const info = await page.evaluate(([j, a, p]) => window.setup(j, a, p), [json, at
 const save = (dataUrl, name) => fs.writeFileSync(path.join(outDir, name), Buffer.from(dataUrl.split(",")[1], "base64"));
 
 save(await page.evaluate(() => window.renderSetup()), "setup_pose.png");
-const fps = 10;
-for (const anim of ["idle", "idle_physics"]) {
-  const dur = info.animations.find(a => a[0] === anim)[1];
+const fps = 30;
+for (const [anim, dur] of info.animations) {
   const times = [];
   for (let i = 0; i < Math.round(dur * fps); i++) times.push(i / fps);
   const frames = await page.evaluate(([n, t]) => window.renderAnim(n, t, 2), [anim, times]);

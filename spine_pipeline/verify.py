@@ -16,6 +16,7 @@ import glob
 import json
 import math
 import os
+import shutil
 import subprocess
 import sys
 
@@ -71,7 +72,7 @@ def previews(player_dir):
     subprocess.check_call([sys.executable, gen, "--skeleton", os.path.join(SPINE, "character.json"),
                            "--atlas", os.path.join(SPINE, "character.atlas"),
                            "--atlas-image", os.path.join(SPINE, "character.png"),
-                           "--output", html, "--animation", "idle", "--background", "#f4f4f8ff",
+                           "--output", html, "--animation", "bust_bounce", "--background", "#f4f4f8ff",
                            "--title", "SpineAI character — idle"], stdout=subprocess.DEVNULL)
     if player_dir and os.path.isdir(player_dir):
         page = open(html, encoding="utf-8").read()
@@ -87,7 +88,8 @@ def previews(player_dir):
     return False
 
 
-def gif(frames, path, size=300, fps=10):
+def gif(frames, path, size=300, fps=10, src_fps=30):
+    frames = frames[::max(1, round(src_fps / fps))]
     ims = [Image.open(f).convert("RGB").resize((size, size), Image.LANCZOS) for f in frames]
     ims[0].save(path, save_all=True, append_images=ims[1:], duration=int(1000 / fps), loop=0, optimize=True)
 
@@ -98,7 +100,7 @@ def sheet(frames, path, n=8, size=256, label=""):
     d = ImageDraw.Draw(out)
     for k, f in enumerate(pick):
         out.paste(Image.open(f).convert("RGB").resize((size, size), Image.LANCZOS), (k * size, 18))
-        d.text((k * size + 4, 3), f"{label} t={k * 8 / n:.1f}s", fill="white")
+        d.text((k * size + 4, 3), f"{label} #{k}", fill="white")
     out.save(path)
 
 
@@ -127,7 +129,7 @@ def main():
     if os.path.exists(old):
         ow = white(old)
         rep["baseline_layout_json_vs_reference"] = {**cmp(ow, refw, refmask), "ssim": ssim_gray(ow, refw)}
-    for anim in ("idle", "idle_physics"):
+    for anim in [a for a, _ in info["animations"]]:
         frames = sorted(glob.glob(os.path.join(FR, anim, "*.png")))
         diffs = [float(np.abs(white(f) - setup).mean()) for f in frames]
         to_ref = [cmp(white(f), refw)["psnr_db"] for f in frames]
@@ -139,6 +141,20 @@ def main():
         sheet(frames, os.path.join(VER, f"{anim}_sheet.png"), label=anim)
         peak = int(np.argmax(diffs))
         motion_overlay(frames[0], frames[peak], os.path.join(VER, f"{anim}_motion_overlay.png"))
+    # bust showcase videos at full frame rate (frame dump is 30 fps), looped 3x
+    bb = os.path.join(FR, "bust_bounce")
+    if os.path.isdir(bb) and shutil.which("ffmpeg"):
+        fps = info.get("frame_fps", 30)
+        for name, vf in (("bust_bounce.mp4", "scale=768:768"),
+                         ("bust_bounce_closeup.mp4", "crop=270:250:245:225,scale=648:600:flags=lanczos")):
+            subprocess.check_call(["ffmpeg", "-v", "error", "-y", "-stream_loop", "2", "-framerate", str(fps),
+                                   "-i", os.path.join(bb, "f%03d.png"), "-vf", vf + ",format=yuv420p",
+                                   "-c:v", "libx264", "-crf", "20", "-movflags", "+faststart",
+                                   os.path.join(VER, name)])
+        frames = sorted(glob.glob(os.path.join(bb, "*.png")))[::2]
+        ims = [Image.open(f).convert("RGB").crop((245, 225, 515, 475)) for f in frames]
+        ims[0].save(os.path.join(VER, "bust_bounce_closeup.gif"), save_all=True, append_images=ims[1:],
+                    duration=int(round(2000 / fps)), loop=0, optimize=True)
     side = np.concatenate([refw, np.full((768, 8, 3), 40), setup, np.full((768, 8, 3), 40),
                            np.clip(np.abs(setup - refw) * 3, 0, 255)], 1)
     Image.fromarray(side.astype(np.uint8)).save(os.path.join(VER, "setup_vs_reference.png"))
